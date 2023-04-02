@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simple_notes_app/router/app_router.dart';
 import 'package:simple_notes_app/theme/app_theme.dart';
 
 void main() {
@@ -14,29 +15,29 @@ class SimpleNotesApp extends StatefulWidget {
 
 class _SimpleNotesAppState extends State<SimpleNotesApp> {
   late final IAppTheme _appTheme;
+  late final AppRouter _appRouter;
 
   @override
   void initState() {
     super.initState();
     _appTheme = IAppTheme.withFlexColorScheme();
+    _appRouter = AppRouter();
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'SimpleNotes',
       debugShowCheckedModeBanner: false,
       theme: _appTheme.lightTheme,
       darkTheme: _appTheme.darkTheme,
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      routerConfig: _appRouter.router,
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+  const MyHomePage({super.key});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -55,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: const Text('Flutter Demo Home Page'),
       ),
       body: Center(
         child: Column(
