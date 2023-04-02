@@ -62,10 +62,28 @@
       "languageVersion": "2.17"
     },
     {
+      "name": "flutter_web_plugins",
+      "rootUri": "file:///home/davidn/tools/flutter/packages/flutter_web_plugins",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "go_router",
+      "rootUri": "file:///home/davidn/.pub-cache/hosted/pub.dev/go_router-6.5.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
       "name": "js",
       "rootUri": "file:///home/davidn/.pub-cache/hosted/pub.dev/js-0.6.5",
       "packageUri": "lib/",
       "languageVersion": "2.16"
+    },
+    {
+      "name": "logging",
+      "rootUri": "file:///home/davidn/.pub-cache/hosted/pub.dev/logging-1.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
     },
     {
       "name": "matcher",
@@ -146,7 +164,7 @@
       "languageVersion": "2.19"
     }
   ],
-  "generated": "2023-04-02T12:57:02.037129Z",
+  "generated": "2023-04-02T13:32:26.376601Z",
   "generator": "pub",
   "generatorVersion": "2.19.6"
 }

@@ -10,6 +10,7 @@ dependencies:
   flex_color_scheme: ^6.1.2
   flutter:
     sdk: flutter
+  go_router: ^6.5.2
 
 dev_dependencies:
   flutter_test:
