@@ -17,7 +17,7 @@ class AppRouter {
           GoRoute(
             path: '/notes',
             builder: (context, state) {
-              return const HomeScreen();
+              return const NotesScreen();
             },
           ),
           GoRoute(
