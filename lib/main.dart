@@ -27,11 +27,21 @@ class _SimpleNotesAppState extends State<SimpleNotesApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'SimpleNotes',
       debugShowCheckedModeBanner: false,
+      title: 'SimpleNotes',
+      scrollBehavior: const AppScrollBehavior(),
       theme: _appTheme.lightTheme,
       darkTheme: _appTheme.darkTheme,
       routerConfig: _appRouter.router,
     );
+  }
+}
+
+class AppScrollBehavior extends ScrollBehavior {
+  const AppScrollBehavior();
+
+  @override
+  ScrollPhysics getScrollPhysics(BuildContext context) {
+    return const BouncingScrollPhysics();
   }
 }
