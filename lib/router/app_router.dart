@@ -19,14 +19,18 @@ class AppRouter {
         routes: [
           GoRoute(
             path: '/notes',
-            builder: (context, state) {
-              return const NotesScreen();
+            pageBuilder: (context, state) {
+              return const NoTransitionPage(
+                child: NotesScreen(),
+              );
             },
           ),
           GoRoute(
             path: '/profile',
-            builder: (context, state) {
-              return const ProfileScreen();
+            pageBuilder: (context, state) {
+              return const NoTransitionPage(
+                child: ProfileScreen(),
+              );
             },
           ),
         ],
