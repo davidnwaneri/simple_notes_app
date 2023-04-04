@@ -46,6 +46,18 @@ class AppRouter {
                 child: ProfileScreen(),
               );
             },
+            routes: [
+              GoRoute(
+                parentNavigatorKey: _rootNavigatorKey,
+                path: 'settings',
+                pageBuilder: (context, state) {
+                  return const MaterialPage(
+                    fullscreenDialog: true,
+                    child: SettingsScreen(),
+                  );
+                },
+              ),
+            ],
           ),
         ],
         builder: (context, state, child) {
@@ -54,16 +66,6 @@ class AppRouter {
               noteService: DummyNoteService(),
             ),
             child: BottomNavigationScaffold(child: child),
-          );
-        },
-      ),
-      GoRoute(
-        parentNavigatorKey: _rootNavigatorKey,
-        path: '/settings',
-        pageBuilder: (context, state) {
-          return const MaterialPage(
-            fullscreenDialog: true,
-            child: SettingsScreen(),
           );
         },
       ),

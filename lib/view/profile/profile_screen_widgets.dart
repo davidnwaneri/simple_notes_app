@@ -76,7 +76,7 @@ class ItemTilesArea extends StatelessWidget {
             icon: Icons.settings_suggest,
             title: 'Settings',
             onTap: () {
-              context.push('/settings');
+              context.push('/profile/settings');
             },
           ),
           ItemTile(
