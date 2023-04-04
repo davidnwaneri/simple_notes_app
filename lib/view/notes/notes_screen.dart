@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:simple_notes_app/core/extensions.dart';
 import 'package:simple_notes_app/models/models.dart';
 import 'package:simple_notes_app/view/notes/bloc/fetch_notes_bloc.dart';
@@ -71,6 +72,12 @@ class NotesScreenListView extends StatelessWidget {
             title: note.title ?? note.titleFromBody,
             shortInfo: note.body,
             lastModified: note.lastModified,
+            onTap: () {
+              context.push<void>(
+                '/notes/details/${note.id}',
+                extra: note,
+              );
+            },
           );
         },
       ),
