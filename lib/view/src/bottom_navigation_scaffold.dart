@@ -23,7 +23,7 @@ class _BottomNavigationScaffoldState extends State<BottomNavigationScaffold> {
 
   int _locationToIndex(String location) {
     switch (location) {
-      case '/settings':
+      case '/profile':
         return 1;
       default:
         return 0;
@@ -35,7 +35,7 @@ class _BottomNavigationScaffoldState extends State<BottomNavigationScaffold> {
     if (nextIndex != 1) {
       context.go('/notes');
     } else {
-      context.go('/settings');
+      context.go('/profile');
     }
   }
 
@@ -52,8 +52,8 @@ class _BottomNavigationScaffoldState extends State<BottomNavigationScaffold> {
             label: 'Notes',
           ),
           NavigationDestination(
-            icon: Icon(Icons.settings_suggest),
-            label: 'Settings',
+            icon: Icon(Icons.person),
+            label: 'Profile',
           ),
         ],
       ),

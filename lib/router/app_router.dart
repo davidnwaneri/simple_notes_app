@@ -24,9 +24,9 @@ class AppRouter {
             },
           ),
           GoRoute(
-            path: '/settings',
+            path: '/profile',
             builder: (context, state) {
-              return const SettingsScreen();
+              return const ProfileScreen();
             },
           ),
         ],
