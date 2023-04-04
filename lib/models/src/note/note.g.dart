@@ -7,7 +7,7 @@ part of 'note.dart';
 // **************************************************************************
 
 _$_Note _$$_NoteFromJson(Map<String, dynamic> json) => _$_Note(
-      title: json['title'] as String,
+      title: json['title'] as String?,
       body: json['body'] as String,
       lastModified: json['lastModified'] as String,
     );

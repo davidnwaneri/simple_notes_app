@@ -36,7 +36,6 @@ const _dummyNotes = <Note>[
     lastModified: '2021-08-01',
   ),
   Note(
-    title: 'The Dark Knight Rises',
     body: 'Lorem ipsum Lorem ipsum',
     lastModified: '2021-08-01',
   ),

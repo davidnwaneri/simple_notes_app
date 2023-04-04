@@ -24,7 +24,6 @@ mixin _$FetchNotesState {
     required TResult Function(String error) error,
   }) =>
       throw _privateConstructorUsedError;
-
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
@@ -42,7 +41,6 @@ mixin _$FetchNotesState {
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
-
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
@@ -51,7 +49,6 @@ mixin _$FetchNotesState {
     required TResult Function(_Error value) error,
   }) =>
       throw _privateConstructorUsedError;
-
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
@@ -83,7 +80,7 @@ class _$FetchNotesStateCopyWithImpl<$Res, $Val extends FetchNotesState>
     implements $FetchNotesStateCopyWith<$Res> {
   _$FetchNotesStateCopyWithImpl(this._value, this._then);
 
-// ignore: unused_field
+  // ignore: unused_field
   final $Val _value;
 // ignore: unused_field
   final $Res Function($Val) _then;
@@ -353,7 +350,7 @@ class _$_Loaded implements _Loaded {
   @override
   List<Note> get notes {
     if (_notes is EqualUnmodifiableListView) return _notes;
-// ignore: implicit_dynamic_type
+    // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_notes);
   }
 
