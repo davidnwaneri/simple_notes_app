@@ -20,12 +20,21 @@ Note _$NoteFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Note {
-  String? get title => throw _privateConstructorUsedError;
-
   String get body => throw _privateConstructorUsedError;
+
   String get lastModified => throw _privateConstructorUsedError;
 
+  /// A unique identifier for the note.
+  ///
+  /// This id will be initially null but
+  /// will be assigned at the backend....So fetching
+  /// notes from the backend will have a non-null id.
+  String? get id => throw _privateConstructorUsedError;
+
+  String? get title => throw _privateConstructorUsedError;
+
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
   @JsonKey(ignore: true)
   $NoteCopyWith<Note> get copyWith => throw _privateConstructorUsedError;
 }
@@ -36,7 +45,7 @@ abstract class $NoteCopyWith<$Res> {
       _$NoteCopyWithImpl<$Res, Note>;
 
   @useResult
-  $Res call({String? title, String body, String lastModified});
+  $Res call({String body, String lastModified, String? id, String? title});
 }
 
 /// @nodoc
@@ -52,15 +61,12 @@ class _$NoteCopyWithImpl<$Res, $Val extends Note>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? title = freezed,
     Object? body = null,
     Object? lastModified = null,
+    Object? id = freezed,
+    Object? title = freezed,
   }) {
     return _then(_value.copyWith(
-      title: freezed == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String?,
       body: null == body
           ? _value.body
           : body // ignore: cast_nullable_to_non_nullable
@@ -69,6 +75,14 @@ class _$NoteCopyWithImpl<$Res, $Val extends Note>
           ? _value.lastModified
           : lastModified // ignore: cast_nullable_to_non_nullable
               as String,
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      title: freezed == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -80,7 +94,7 @@ abstract class _$$_NoteCopyWith<$Res> implements $NoteCopyWith<$Res> {
 
   @override
   @useResult
-  $Res call({String? title, String body, String lastModified});
+  $Res call({String body, String lastModified, String? id, String? title});
 }
 
 /// @nodoc
@@ -92,15 +106,12 @@ class __$$_NoteCopyWithImpl<$Res> extends _$NoteCopyWithImpl<$Res, _$_Note>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? title = freezed,
     Object? body = null,
     Object? lastModified = null,
+    Object? id = freezed,
+    Object? title = freezed,
   }) {
     return _then(_$_Note(
-      title: freezed == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String?,
       body: null == body
           ? _value.body
           : body // ignore: cast_nullable_to_non_nullable
@@ -109,6 +120,14 @@ class __$$_NoteCopyWithImpl<$Res> extends _$NoteCopyWithImpl<$Res, _$_Note>
           ? _value.lastModified
           : lastModified // ignore: cast_nullable_to_non_nullable
               as String,
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      title: freezed == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -116,20 +135,29 @@ class __$$_NoteCopyWithImpl<$Res> extends _$NoteCopyWithImpl<$Res, _$_Note>
 /// @nodoc
 @JsonSerializable()
 class _$_Note implements _Note {
-  const _$_Note({this.title, required this.body, required this.lastModified});
+  const _$_Note(
+      {required this.body, required this.lastModified, this.id, this.title});
 
   factory _$_Note.fromJson(Map<String, dynamic> json) => _$$_NoteFromJson(json);
 
-  @override
-  final String? title;
   @override
   final String body;
   @override
   final String lastModified;
 
+  /// A unique identifier for the note.
+  ///
+  /// This id will be initially null but
+  /// will be assigned at the backend....So fetching
+  /// notes from the backend will have a non-null id.
+  @override
+  final String? id;
+  @override
+  final String? title;
+
   @override
   String toString() {
-    return 'Note(title: $title, body: $body, lastModified: $lastModified)';
+    return 'Note(body: $body, lastModified: $lastModified, id: $id, title: $title)';
   }
 
   @override
@@ -137,15 +165,16 @@ class _$_Note implements _Note {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Note &&
-            (identical(other.title, title) || other.title == title) &&
             (identical(other.body, body) || other.body == body) &&
             (identical(other.lastModified, lastModified) ||
-                other.lastModified == lastModified));
+                other.lastModified == lastModified) &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.title, title) || other.title == title));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, title, body, lastModified);
+  int get hashCode => Object.hash(runtimeType, body, lastModified, id, title);
 
   @JsonKey(ignore: true)
   @override
@@ -163,19 +192,31 @@ class _$_Note implements _Note {
 
 abstract class _Note implements Note {
   const factory _Note(
-      {final String? title,
-      required final String body,
-      required final String lastModified}) = _$_Note;
+      {required final String body,
+      required final String lastModified,
+      final String? id,
+      final String? title}) = _$_Note;
 
   factory _Note.fromJson(Map<String, dynamic> json) = _$_Note.fromJson;
 
   @override
-  String? get title;
+  String get body;
 
   @override
-  String get body;
-  @override
   String get lastModified;
+
+  @override
+
+  /// A unique identifier for the note.
+  ///
+  /// This id will be initially null but
+  /// will be assigned at the backend....So fetching
+  /// notes from the backend will have a non-null id.
+  String? get id;
+
+  @override
+  String? get title;
+
   @override
   @JsonKey(ignore: true)
   _$$_NoteCopyWith<_$_Note> get copyWith => throw _privateConstructorUsedError;

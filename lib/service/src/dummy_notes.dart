@@ -8,6 +8,7 @@ UnmodifiableListView<Note> get dummyNotes {
 
 const _dummyNotes = <Note>[
   Note(
+    id: '1',
     title: 'The Inception',
     body: 'The Inception is a 2010 science fiction action film written, '
         'produced, and directed by Christopher Nolan, and co-produced by '
@@ -19,6 +20,7 @@ const _dummyNotes = <Note>[
     lastModified: '2021-08-01',
   ),
   Note(
+    id: '2',
     title: 'The Dark Knight',
     body: 'The Dark Knight is a 2008 superhero film directed, '
         'produced, and co-written by Christopher Nolan. '
@@ -36,6 +38,7 @@ const _dummyNotes = <Note>[
     lastModified: '2021-08-01',
   ),
   Note(
+    id: '3',
     body: 'Lorem ipsum Lorem ipsum',
     lastModified: '2021-08-01',
   ),
