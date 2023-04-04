@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:simple_notes_app/core/extensions.dart';
 import 'package:simple_notes_app/models/models.dart';
 import 'package:simple_notes_app/view/notes/bloc/fetch_notes_bloc.dart';
 import 'package:simple_notes_app/widgets_library/widgets_library.dart';
@@ -67,7 +68,7 @@ class NotesScreenListView extends StatelessWidget {
         (context, index) {
           final note = notes[index];
           return NoteTile(
-            title: note.title,
+            title: note.title ?? note.titleFromBody,
             shortInfo: note.body,
             lastModified: note.lastModified,
           );
