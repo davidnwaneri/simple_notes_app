@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:simple_notes_app/core/extensions.dart';
 
 class ProfileCard extends StatelessWidget {
@@ -74,7 +75,9 @@ class ItemTilesArea extends StatelessWidget {
           ItemTile(
             icon: Icons.settings_suggest,
             title: 'Settings',
-            onTap: () {},
+            onTap: () {
+              context.push('/settings');
+            },
           ),
           ItemTile(
             icon: Icons.logout_outlined,

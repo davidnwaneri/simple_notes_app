@@ -45,6 +45,16 @@ class AppRouter {
           );
         },
       ),
+      GoRoute(
+        parentNavigatorKey: _rootNavigatorKey,
+        path: '/settings',
+        pageBuilder: (context, state) {
+          return const MaterialPage(
+            fullscreenDialog: true,
+            child: SettingsScreen(),
+          );
+        },
+      ),
     ],
   );
 }
