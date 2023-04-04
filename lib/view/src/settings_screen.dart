@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simple_notes_app/widgets_library/widgets_library.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -6,11 +7,25 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Settings'),
-      ),
-      body: const Center(
-        child: Text('SettingsScreen'),
+      body: CustomScrollView(
+        slivers: [
+          const ReusableSliverAppBar(
+            title: 'Settings',
+          ),
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            sliver: SliverToBoxAdapter(
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Text('SettingsScreen'),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

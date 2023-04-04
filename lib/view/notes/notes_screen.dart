@@ -10,26 +10,42 @@ class NotesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Notes'),
-      ),
-      body: BlocBuilder<FetchNotesBloc, FetchNotesState>(
-        builder: (context, state) {
-          return state.maybeWhen(
-            orElse: () {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            },
-            error: (error) => ErrorView(error: error),
-            loaded: (notes) {
-              if (notes.isEmpty) {
-                return const EmptyNotesScreenView();
-              }
-              return NotesScreenListView(notes: notes);
-            },
-          );
+      body: RefreshIndicator(
+        edgeOffset: 100,
+        onRefresh: () async {
+          context.read<FetchNotesBloc>().add(const NotesFetched());
         },
+        child: CustomScrollView(
+          slivers: [
+            const ReusableSliverAppBar(
+              title: 'Notes',
+            ),
+            SliverPadding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              sliver: BlocBuilder<FetchNotesBloc, FetchNotesState>(
+                builder: (context, state) {
+                  return state.maybeWhen(
+                    orElse: () {
+                      return const SliverFillRemaining(
+                        hasScrollBody: false,
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      );
+                    },
+                    error: (error) => ErrorView(error: error),
+                    loaded: (notes) {
+                      if (notes.isEmpty) {
+                        return const EmptyNotesScreenView();
+                      }
+                      return NotesScreenListView(notes: notes);
+                    },
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -45,19 +61,18 @@ class NotesScreenListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      itemCount: notes.length,
-      separatorBuilder: (context, state) {
-        return const SizedBox(height: 8);
-      },
-      itemBuilder: (context, index) {
-        final note = notes[index];
-        return NoteTile(
-          title: note.title,
-          shortInfo: note.body,
-          lastModified: note.lastModified,
-        );
-      },
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+        childCount: notes.length,
+        (context, index) {
+          final note = notes[index];
+          return NoteTile(
+            title: note.title,
+            shortInfo: note.body,
+            lastModified: note.lastModified,
+          );
+        },
+      ),
     );
   }
 }
@@ -67,8 +82,11 @@ class EmptyNotesScreenView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Your notes will appear here.'),
+    return const SliverFillRemaining(
+      hasScrollBody: false,
+      child: Center(
+        child: Text('Your notes will appear here.'),
+      ),
     );
   }
 }
@@ -83,18 +101,21 @@ class ErrorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(error),
-          ElevatedButton(
-            onPressed: () {
-              context.read<FetchNotesBloc>().add(const NotesFetched());
-            },
-            child: const Text('Try again'),
-          ),
-        ],
+    return SliverFillRemaining(
+      hasScrollBody: false,
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(error),
+            ElevatedButton(
+              onPressed: () {
+                context.read<FetchNotesBloc>().add(const NotesFetched());
+              },
+              child: const Text('Try again'),
+            ),
+          ],
+        ),
       ),
     );
   }
