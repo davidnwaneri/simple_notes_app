@@ -15,48 +15,61 @@ class BottomNavigationScaffold extends StatefulWidget {
 }
 
 class _BottomNavigationScaffoldState extends State<BottomNavigationScaffold> {
-  int get _currentIndex {
-    final location = GoRouter.of(context).location;
-    final index = _locationToIndex(location);
-    return index;
-  }
+  int _currentIndex = 0;
 
-  int _locationToIndex(String location) {
-    switch (location) {
-      case '/profile':
-        return 1;
-      default:
-        return 0;
-    }
-  }
+  final _destinationItems = const <ReusableNavigationDestination>[
+    ReusableNavigationDestination(
+      icon: Icons.sticky_note_2,
+      label: 'Notes',
+      location: '/notes',
+    ),
+    ReusableNavigationDestination(
+      icon: Icons.person,
+      label: 'Profile',
+      location: '/profile',
+    ),
+  ];
 
   void _toggleCurrentIndex(int nextIndex) {
     if (nextIndex == _currentIndex) return;
-    if (nextIndex != 1) {
-      context.go('/notes');
-    } else {
-      context.go('/profile');
-    }
+    final location = _destinationItems[nextIndex].location;
+    setState(() {
+      _currentIndex = nextIndex;
+    });
+    context.go(location);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       body: widget.child,
       bottomNavigationBar: NavigationBar(
         selectedIndex: _currentIndex,
         onDestinationSelected: _toggleCurrentIndex,
-        destinations: const <NavigationDestination>[
-          NavigationDestination(
-            icon: Icon(Icons.sticky_note_2),
-            label: 'Notes',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
+        destinations: _destinationItems,
       ),
+    );
+  }
+}
+
+class ReusableNavigationDestination extends StatelessWidget {
+  const ReusableNavigationDestination({
+    required this.icon,
+    required this.label,
+    required this.location,
+    super.key,
+  });
+
+  final IconData icon;
+  final String label;
+  final String location;
+
+  @override
+  Widget build(BuildContext context) {
+    return NavigationDestination(
+      icon: Icon(icon),
+      label: label,
     );
   }
 }

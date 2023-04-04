@@ -18,6 +18,7 @@ class AppRouter {
         navigatorKey: _shellNavigatorKey,
         routes: [
           GoRoute(
+            parentNavigatorKey: _shellNavigatorKey,
             path: '/notes',
             pageBuilder: (context, state) {
               return const NoTransitionPage(
@@ -26,6 +27,7 @@ class AppRouter {
             },
           ),
           GoRoute(
+            parentNavigatorKey: _shellNavigatorKey,
             path: '/profile',
             pageBuilder: (context, state) {
               return const NoTransitionPage(
