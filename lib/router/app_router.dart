@@ -29,7 +29,7 @@ class AppRouter {
             routes: [
               GoRoute(
                 parentNavigatorKey: _rootNavigatorKey,
-                path: 'details/:id',
+                path: ':id/details',
                 builder: (context, state) {
                   return NoteDetailsScreen(
                     note: state.extra! as Note,

@@ -74,7 +74,7 @@ class NotesScreenListView extends StatelessWidget {
             lastModified: note.lastModified,
             onTap: () {
               context.push<void>(
-                '/notes/details/${note.id}',
+                '/notes/${note.id}/details',
                 extra: note,
               );
             },
