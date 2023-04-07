@@ -26,7 +26,12 @@ class NoteDetailsScreen extends StatelessWidget {
             actions: [
               IconButton(
                 icon: const Icon(Icons.edit),
-                onPressed: () {},
+                onPressed: () {
+                  context.go(
+                    '/notes/${note.id}/edit',
+                    extra: note,
+                  );
+                },
               ),
             ],
           ),

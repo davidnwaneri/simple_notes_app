@@ -36,6 +36,15 @@ class AppRouter {
                   );
                 },
               ),
+              GoRoute(
+                parentNavigatorKey: _rootNavigatorKey,
+                path: ':id/edit',
+                builder: (context, state) {
+                  return EditNoteScreen(
+                    note: state.extra! as Note,
+                  );
+                },
+              ),
             ],
           ),
           GoRoute(
