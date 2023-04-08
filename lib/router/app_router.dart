@@ -45,6 +45,13 @@ class AppRouter {
                   );
                 },
               ),
+              GoRoute(
+                parentNavigatorKey: _rootNavigatorKey,
+                path: 'create',
+                builder: (context, state) {
+                  return const CreateNoteScreen();
+                },
+              ),
             ],
           ),
           GoRoute(
@@ -70,10 +77,17 @@ class AppRouter {
           ),
         ],
         builder: (context, state, child) {
-          return BlocProvider<FetchNotesBloc>(
-            create: (_) => FetchNotesBloc(
-              noteService: DummyNoteService(),
-            ),
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider<CurrentIndexCubit>(
+                create: (_) => CurrentIndexCubit(),
+              ),
+              BlocProvider<FetchNotesBloc>(
+                create: (_) => FetchNotesBloc(
+                  noteService: DummyNoteService(),
+                ),
+              ),
+            ],
             child: BottomNavigationScaffold(child: child),
           );
         },

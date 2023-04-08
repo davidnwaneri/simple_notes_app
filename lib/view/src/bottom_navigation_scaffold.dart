@@ -43,6 +43,16 @@ class _BottomNavigationScaffoldState extends State<BottomNavigationScaffold> {
     return Scaffold(
       extendBody: true,
       body: widget.child,
+      floatingActionButton: (currentIndex == 0)
+          ? FloatingActionButton(
+              onPressed: () {
+                context.push<void>(
+                  '/notes/create',
+                );
+              },
+              child: const Icon(Icons.add),
+            )
+          : null,
       bottomNavigationBar: NavigationBar(
         selectedIndex: currentIndex,
         onDestinationSelected: _toggleCurrentIndex,
