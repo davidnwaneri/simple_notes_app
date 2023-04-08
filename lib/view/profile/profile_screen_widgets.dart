@@ -34,7 +34,9 @@ class ProfileCard extends StatelessWidget {
                     minimumSize: Size.zero,
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    context.push('/auth/sign-in');
+                  },
                   child: Text(
                     'Sign In',
                     style: context.theme.textButtonTheme.style?.textStyle

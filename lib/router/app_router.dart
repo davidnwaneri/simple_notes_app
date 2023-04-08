@@ -92,6 +92,20 @@ class AppRouter {
           );
         },
       ),
+      GoRoute(
+        parentNavigatorKey: _rootNavigatorKey,
+        path: '/auth',
+        redirect: (context, state) => '/auth/sign-in',
+        routes: [
+          GoRoute(
+            parentNavigatorKey: _rootNavigatorKey,
+            path: 'sign-in',
+            builder: (context, state) {
+              return const SignInScreen();
+            },
+          ),
+        ],
+      ),
     ],
   );
 }
