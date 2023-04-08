@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class BottomNavigationScaffold extends StatefulWidget {
@@ -15,8 +16,6 @@ class BottomNavigationScaffold extends StatefulWidget {
 }
 
 class _BottomNavigationScaffoldState extends State<BottomNavigationScaffold> {
-  int _currentIndex = 0;
-
   final _destinationItems = const <ReusableNavigationDestination>[
     ReusableNavigationDestination(
       icon: Icons.sticky_note_2,
@@ -31,21 +30,21 @@ class _BottomNavigationScaffoldState extends State<BottomNavigationScaffold> {
   ];
 
   void _toggleCurrentIndex(int nextIndex) {
-    if (nextIndex == _currentIndex) return;
+    final currentIndex = context.read<CurrentIndexCubit>().state;
+    if (nextIndex == currentIndex) return;
     final location = _destinationItems[nextIndex].location;
-    setState(() {
-      _currentIndex = nextIndex;
-    });
+    context.read<CurrentIndexCubit>().toggleCurrentIndex(nextIndex: nextIndex);
     context.go(location);
   }
 
   @override
   Widget build(BuildContext context) {
+    final currentIndex = context.watch<CurrentIndexCubit>().state;
     return Scaffold(
       extendBody: true,
       body: widget.child,
       bottomNavigationBar: NavigationBar(
-        selectedIndex: _currentIndex,
+        selectedIndex: currentIndex,
         onDestinationSelected: _toggleCurrentIndex,
         destinations: _destinationItems,
       ),
@@ -71,5 +70,13 @@ class ReusableNavigationDestination extends StatelessWidget {
       icon: Icon(icon),
       label: label,
     );
+  }
+}
+
+class CurrentIndexCubit extends Cubit<int> {
+  CurrentIndexCubit() : super(0);
+
+  void toggleCurrentIndex({required int nextIndex}) {
+    emit(nextIndex);
   }
 }
