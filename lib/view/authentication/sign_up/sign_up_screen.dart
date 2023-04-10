@@ -6,54 +6,61 @@ import 'package:simple_notes_app/core/constants.dart';
 import 'package:simple_notes_app/core/extensions.dart';
 import 'package:simple_notes_app/widgets_library/widgets_library.dart';
 
-class SignInScreen extends StatelessWidget {
-  const SignInScreen({super.key});
+class SignUpScreen extends StatelessWidget {
+  const SignUpScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<HidePasswordCubit>(
-      create: (_) => HidePasswordCubit(),
-      child: const MainSignInScreen(),
+    return BlocProvider<_HidePasswordCubit>(
+      // value: _HidePasswordCubit(),
+      create: (_) => _HidePasswordCubit(),
+      child: const MainSignUpScreen(),
     );
   }
 }
 
-class MainSignInScreen extends StatefulWidget {
-  const MainSignInScreen({super.key});
+class MainSignUpScreen extends StatefulWidget {
+  const MainSignUpScreen({super.key});
 
   @override
-  State<MainSignInScreen> createState() => _MainSignInScreenState();
+  State<MainSignUpScreen> createState() => _MainSignUpScreenState();
 }
 
-class _MainSignInScreenState extends State<MainSignInScreen> {
+class _MainSignUpScreenState extends State<MainSignUpScreen> {
+  late final TextEditingController _fullNameController;
   late final TextEditingController _emailController;
   late final TextEditingController _passwordController;
+  late final TextEditingController _confirmPasswordController;
 
   @override
   void initState() {
     super.initState();
+    _fullNameController = TextEditingController();
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
+    _confirmPasswordController = TextEditingController();
   }
 
   @override
   void dispose() {
+    _fullNameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+    _confirmPasswordController.dispose();
     super.dispose();
   }
 
   void _togglePasswordVisibility() {
-    context.read<HidePasswordCubit>().toggle();
+    context.read<_HidePasswordCubit>().toggle();
   }
 
   @override
   Widget build(BuildContext context) {
-    final hidePassword = context.watch<HidePasswordCubit>().state;
+    final hidePassword = context.watch<_HidePasswordCubit>().state;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('Sign In'),
+        title: const Text('Sign Up'),
         leading: const BackButton(),
       ),
       body: Padding(
@@ -62,6 +69,15 @@ class _MainSignInScreenState extends State<MainSignInScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            AppReusableTextField(
+              controller: _fullNameController,
+              labelText: 'Full Name',
+              outlined: true,
+              textInputType: TextInputType.name,
+              contentPadding: null,
+              validate: true,
+            ),
+            const SizedBox(height: 10),
             AppReusableTextField(
               controller: _emailController,
               labelText: 'Email',
@@ -76,6 +92,21 @@ class _MainSignInScreenState extends State<MainSignInScreen> {
               hideText: hidePassword,
               outlined: true,
               labelText: 'Password',
+              contentPadding: null,
+              suffixIcon: IconButton(
+                onPressed: _togglePasswordVisibility,
+                icon: Icon(
+                  hidePassword ? Icons.visibility : Icons.visibility_off,
+                  color: context.theme.primaryColor,
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            AppReusableTextField(
+              controller: _confirmPasswordController,
+              hideText: hidePassword,
+              outlined: true,
+              labelText: 'Confirm Password',
               textInputAction: TextInputAction.done,
               contentPadding: null,
               suffixIcon: IconButton(
@@ -87,11 +118,11 @@ class _MainSignInScreenState extends State<MainSignInScreen> {
               ),
             ),
             const SizedBox(height: 30),
-            SignInButton(
+            SignUpButton(
               onTap: () {},
             ),
             const SizedBox(height: 30),
-            const RedirectToSignUpText(),
+            const RedirectToSignInText(),
           ],
         ),
       ),
@@ -99,8 +130,8 @@ class _MainSignInScreenState extends State<MainSignInScreen> {
   }
 }
 
-class SignInButton extends StatelessWidget {
-  const SignInButton({
+class SignUpButton extends StatelessWidget {
+  const SignUpButton({
     this.onTap,
     super.key,
   });
@@ -117,29 +148,30 @@ class SignInButton extends StatelessWidget {
         ),
       ),
       onPressed: onTap,
-      child: const Text('Sign In'),
+      child: const Text('Sign Up'),
     );
   }
 }
 
-class RedirectToSignUpText extends StatelessWidget {
-  const RedirectToSignUpText({super.key});
+class RedirectToSignInText extends StatelessWidget {
+  const RedirectToSignInText({super.key});
 
   @override
   Widget build(BuildContext context) {
     return RichText(
       textAlign: TextAlign.center,
       text: TextSpan(
-        text: "Don't have an account? ",
+        text: 'Already have an account? ',
         children: [
           TextSpan(
-            text: 'Sign Up',
+            text: 'Sign In',
             style: context.textTheme.bodyLarge?.copyWith(
               decoration: TextDecoration.underline,
             ),
             recognizer: TapGestureRecognizer()
               ..onTap = () {
-                context.push('/auth/sign-up');
+                // Go back to the login screen
+                context.pop<void>();
               },
           ),
         ],
@@ -148,8 +180,8 @@ class RedirectToSignUpText extends StatelessWidget {
   }
 }
 
-class HidePasswordCubit extends Cubit<bool> {
-  HidePasswordCubit() : super(true);
+class _HidePasswordCubit extends Cubit<bool> {
+  _HidePasswordCubit() : super(true);
 
   void toggle() => emit(!state);
 }

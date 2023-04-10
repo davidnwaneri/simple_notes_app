@@ -95,13 +95,27 @@ class AppRouter {
       GoRoute(
         parentNavigatorKey: _rootNavigatorKey,
         path: '/auth',
-        redirect: (context, state) => '/auth/sign-in',
+        redirect: (context, state) {
+          if (state.path == '/auth/sign-up') {
+            return state.path;
+          } else if (state.path == '/auth/sign-in') {
+            return state.path;
+          }
+          return null;
+        },
         routes: [
           GoRoute(
             parentNavigatorKey: _rootNavigatorKey,
             path: 'sign-in',
             builder: (context, state) {
               return const SignInScreen();
+            },
+          ),
+          GoRoute(
+            parentNavigatorKey: _rootNavigatorKey,
+            path: 'sign-up',
+            builder: (context, state) {
+              return const SignUpScreen();
             },
           ),
         ],
