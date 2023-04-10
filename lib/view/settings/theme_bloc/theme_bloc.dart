@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 // EVENT
 abstract class ThemeEvent extends Equatable {
@@ -20,13 +20,24 @@ class ThemeChanged extends ThemeEvent {
 }
 
 // BLOC
-class ThemeBloc extends Bloc<ThemeEvent, ThemeValue> {
+class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeValue> {
   ThemeBloc() : super(ThemeValue.system) {
     on<ThemeChanged>(_onThemeChanged);
   }
 
   void _onThemeChanged(ThemeChanged event, Emitter<ThemeValue> emit) {
     emit(event.theme);
+  }
+
+  @override
+  ThemeValue? fromJson(Map<String, dynamic> json) {
+    return ThemeValue.values.firstWhere((t) => t.toString() == json['theme']);
+  }
+
+  @override
+  Map<String, dynamic>? toJson(ThemeValue state) {
+    final theme = state.toString();
+    return {'theme': theme};
   }
 }
 
