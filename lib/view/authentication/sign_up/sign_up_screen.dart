@@ -125,10 +125,11 @@ class _MainSignUpScreenState extends State<MainSignUpScreen>
       loading: showLoadingIndicator,
       success: (user) {
         removeLoadingIndicator();
-        context
-          ..pop<void>() // Return to the sign in screen
-          ..showSnackBar('Account created successfully!'
-              ' Proceed to sign in.');
+        showSuccessIndicator(
+          message: 'Account created successfully!  Proceed to sign in.',
+          // Return to the sign in screen
+          onDismissed: () => context.pop<void>(),
+        );
       },
       failure: (failure) {
         removeLoadingIndicator();
