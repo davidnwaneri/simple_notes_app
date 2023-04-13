@@ -150,52 +150,58 @@ class _MainSignUpScreenState extends State<MainSignUpScreen>
     return GestureDetector(
       onTap: _dismissKeyboard,
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           centerTitle: true,
           title: const Text('Sign Up'),
           leading: const BackButton(),
         ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: horizontalPadding),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              FullNameInputField(
-                controller: _fullNameController,
-                validator: (_) => _signUpForm.name.displayError?.errorText,
+        body: Center(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: horizontalPadding,
               ),
-              const SizedBox(height: 10),
-              EmailInputField(
-                controller: _emailController,
-                validator: (_) => _signUpForm.email.displayError?.errorText,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  FullNameInputField(
+                    controller: _fullNameController,
+                    validator: (_) => _signUpForm.name.displayError?.errorText,
+                  ),
+                  const SizedBox(height: 10),
+                  EmailInputField(
+                    controller: _emailController,
+                    validator: (_) => _signUpForm.email.displayError?.errorText,
+                  ),
+                  const SizedBox(height: 10),
+                  PasswordInputField(
+                    controller: _passwordController,
+                    hidePassword: hidePassword,
+                    togglePasswordVisibility: _togglePasswordVisibility,
+                    validator: (_) =>
+                        _signUpForm.password.displayError?.errorText,
+                  ),
+                  const SizedBox(height: 10),
+                  ConfirmPasswordInputField(
+                    controller: _confirmPasswordController,
+                    hidePassword: hidePassword,
+                    togglePasswordVisibility: _togglePasswordVisibility,
+                    validator: (_) =>
+                        _signUpForm.confirmPassword.displayError?.errorText,
+                  ),
+                  const SizedBox(height: 30),
+                  BlocListener<SignUpBloc, SignUpState>(
+                    listener: _signupBlocListener,
+                    child: SignUpButton(
+                      onTap: isFormValid ? _submitForm : null,
+                    ),
+                  ),
+                  const SizedBox(height: 30),
+                  const RedirectToSignInText(),
+                ],
               ),
-              const SizedBox(height: 10),
-              PasswordInputField(
-                controller: _passwordController,
-                hidePassword: hidePassword,
-                togglePasswordVisibility: _togglePasswordVisibility,
-                validator: (_) => _signUpForm.password.displayError?.errorText,
-              ),
-              const SizedBox(height: 10),
-              ConfirmPasswordInputField(
-                controller: _confirmPasswordController,
-                hidePassword: hidePassword,
-                togglePasswordVisibility: _togglePasswordVisibility,
-                validator: (_) =>
-                    _signUpForm.confirmPassword.displayError?.errorText,
-              ),
-              const SizedBox(height: 30),
-              BlocListener<SignUpBloc, SignUpState>(
-                listener: _signupBlocListener,
-                child: SignUpButton(
-                  onTap: isFormValid ? _submitForm : null,
-                ),
-              ),
-              const SizedBox(height: 30),
-              const RedirectToSignInText(),
-            ],
+            ),
           ),
         ),
       ),
