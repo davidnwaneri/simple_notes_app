@@ -78,14 +78,14 @@ class _MainSignUpScreenState extends State<MainSignUpScreen>
     _signUpForm = _signUpForm.copyWith(
       name: NameInput.dirty(_fullNameController.text),
     );
-    _toggleIsFormValid();
+    _checkIsFormValid();
   }
 
   void _onEmailChanged() {
     _signUpForm = _signUpForm.copyWith(
       email: EmailInput.dirty(_emailController.text),
     );
-    _toggleIsFormValid();
+    _checkIsFormValid();
   }
 
   void _onPasswordChanged() {
@@ -96,10 +96,10 @@ class _MainSignUpScreenState extends State<MainSignUpScreen>
         password: _passwordController.text,
       ),
     );
-    _toggleIsFormValid();
+    _checkIsFormValid();
   }
 
-  void _toggleIsFormValid() {
+  void _checkIsFormValid() {
     context.read<_FormValidationCubit>().toggleFormValidation(
           isFormValid: _signUpForm.isValid,
         );
