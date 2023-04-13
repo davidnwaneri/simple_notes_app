@@ -128,7 +128,7 @@ class _MainSignUpScreenState extends State<MainSignUpScreen>
     state.maybeWhen(
       orElse: () {},
       loading: showLoadingIndicator,
-      success: (user) {
+      success: () {
         removeLoadingIndicator();
         showSuccessIndicator(
           message: 'Account created successfully!  Proceed to sign in.',
