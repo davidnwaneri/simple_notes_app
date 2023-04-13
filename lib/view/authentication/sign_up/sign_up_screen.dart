@@ -119,6 +119,22 @@ class _MainSignUpScreenState extends State<MainSignUpScreen>
         );
   }
 
+  void _signupBlocListener(BuildContext context, SignUpState state) {
+    state.maybeWhen(
+      orElse: () {},
+      loading: showLoadingIndicator,
+      success: (user) {
+        removeLoadingIndicator();
+        context.showSnackBar('Account created successfully!'
+            ' Proceed to sign in.');
+      },
+      failure: (failure) {
+        removeLoadingIndicator();
+        context.showSnackBar(failure);
+      },
+    );
+  }
+
   @override
   Widget buildWidget(BuildContext context) {
     final isFormValid = context.watch<_FormValidationCubit>().state;
@@ -162,24 +178,7 @@ class _MainSignUpScreenState extends State<MainSignUpScreen>
             ),
             const SizedBox(height: 30),
             BlocListener<SignUpBloc, SignUpState>(
-              listener: (context, state) {
-                state.maybeWhen(
-                  orElse: () {},
-                  loading: () {
-                    showLoadingIndicator();
-                  },
-                  success: (user) {
-                    'User: $user'.log();
-                    removeLoadingIndicator();
-                    context.showSnackBar('Account created successfully!'
-                        ' Proceed to sign in.');
-                  },
-                  failure: (failure) {
-                    removeLoadingIndicator();
-                    context.showSnackBar(failure);
-                  },
-                );
-              },
+              listener: _signupBlocListener,
               child: SignUpButton(
                 onTap: isFormValid ? _submitForm : null,
               ),
