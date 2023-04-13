@@ -110,6 +110,7 @@ class _MainSignUpScreenState extends State<MainSignUpScreen>
   }
 
   void _submitForm() {
+    _dismissKeyboard();
     context.read<SignUpBloc>().add(
           SignUpEventStarted(
             name: _fullNameController.text,
@@ -117,6 +118,10 @@ class _MainSignUpScreenState extends State<MainSignUpScreen>
             password: _passwordController.text,
           ),
         );
+  }
+
+  void _dismissKeyboard() {
+    FocusManager.instance.primaryFocus?.unfocus();
   }
 
   void _signupBlocListener(BuildContext context, SignUpState state) {
@@ -142,53 +147,56 @@ class _MainSignUpScreenState extends State<MainSignUpScreen>
   Widget buildWidget(BuildContext context) {
     final isFormValid = context.watch<_FormValidationCubit>().state;
     final hidePassword = context.watch<_HidePasswordCubit>().state;
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text('Sign Up'),
-        leading: const BackButton(),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: horizontalPadding),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            FullNameInputField(
-              controller: _fullNameController,
-              validator: (_) => _signUpForm.name.displayError?.errorText,
-            ),
-            const SizedBox(height: 10),
-            EmailInputField(
-              controller: _emailController,
-              validator: (_) => _signUpForm.email.displayError?.errorText,
-            ),
-            const SizedBox(height: 10),
-            PasswordInputField(
-              controller: _passwordController,
-              hidePassword: hidePassword,
-              togglePasswordVisibility: _togglePasswordVisibility,
-              validator: (_) => _signUpForm.password.displayError?.errorText,
-            ),
-            const SizedBox(height: 10),
-            ConfirmPasswordInputField(
-              controller: _confirmPasswordController,
-              hidePassword: hidePassword,
-              togglePasswordVisibility: _togglePasswordVisibility,
-              validator: (_) =>
-                  _signUpForm.confirmPassword.displayError?.errorText,
-            ),
-            const SizedBox(height: 30),
-            BlocListener<SignUpBloc, SignUpState>(
-              listener: _signupBlocListener,
-              child: SignUpButton(
-                onTap: isFormValid ? _submitForm : null,
+    return GestureDetector(
+      onTap: _dismissKeyboard,
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          centerTitle: true,
+          title: const Text('Sign Up'),
+          leading: const BackButton(),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: horizontalPadding),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              FullNameInputField(
+                controller: _fullNameController,
+                validator: (_) => _signUpForm.name.displayError?.errorText,
               ),
-            ),
-            const SizedBox(height: 30),
-            const RedirectToSignInText(),
-          ],
+              const SizedBox(height: 10),
+              EmailInputField(
+                controller: _emailController,
+                validator: (_) => _signUpForm.email.displayError?.errorText,
+              ),
+              const SizedBox(height: 10),
+              PasswordInputField(
+                controller: _passwordController,
+                hidePassword: hidePassword,
+                togglePasswordVisibility: _togglePasswordVisibility,
+                validator: (_) => _signUpForm.password.displayError?.errorText,
+              ),
+              const SizedBox(height: 10),
+              ConfirmPasswordInputField(
+                controller: _confirmPasswordController,
+                hidePassword: hidePassword,
+                togglePasswordVisibility: _togglePasswordVisibility,
+                validator: (_) =>
+                    _signUpForm.confirmPassword.displayError?.errorText,
+              ),
+              const SizedBox(height: 30),
+              BlocListener<SignUpBloc, SignUpState>(
+                listener: _signupBlocListener,
+                child: SignUpButton(
+                  onTap: isFormValid ? _submitForm : null,
+                ),
+              ),
+              const SizedBox(height: 30),
+              const RedirectToSignInText(),
+            ],
+          ),
         ),
       ),
     );
