@@ -1,3 +1,4 @@
+import 'package:appwrite/appwrite.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
@@ -13,9 +14,26 @@ Future<void> main() async {
   );
 
   runApp(
-    BlocProvider<ThemeBloc>(
-      create: (_) => ThemeBloc(),
-      child: const SimpleNotesApp(),
+    MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider<Client>(
+          create: (context) {
+            final client = Client();
+            return client
+                .setEndpoint(const String.fromEnvironment('APPWRITE_ENDPOINT'))
+                .setProject(const String.fromEnvironment('APPWRITE_PROJECT_ID'))
+                .setSelfSigned();
+          },
+        ),
+      ],
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider<ThemeBloc>(
+            create: (context) => ThemeBloc(),
+          ),
+        ],
+        child: const SimpleNotesApp(),
+      ),
     ),
   );
 }
