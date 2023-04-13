@@ -9,6 +9,8 @@ import 'package:simple_notes_app/core/loading_indicator_mixin.dart';
 import 'package:simple_notes_app/view/authentication/sign_up/bloc/sign_up_bloc.dart';
 import 'package:simple_notes_app/widgets_library/widgets_library.dart';
 
+part 'widgets/signup_screen_input_fields.dart';
+
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
 
@@ -134,58 +136,27 @@ class _MainSignUpScreenState extends State<MainSignUpScreen>
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            AppReusableTextField(
+            FullNameInputField(
               controller: _fullNameController,
-              labelText: 'Full Name*',
-              outlined: true,
-              textInputType: TextInputType.name,
-              contentPadding: null,
-              validate: true,
               validator: (_) => _signUpForm.name.displayError?.errorText,
             ),
             const SizedBox(height: 10),
-            AppReusableTextField(
+            EmailInputField(
               controller: _emailController,
-              labelText: 'Email*',
-              outlined: true,
-              textInputType: TextInputType.emailAddress,
-              contentPadding: null,
-              validate: true,
               validator: (_) => _signUpForm.email.displayError?.errorText,
             ),
             const SizedBox(height: 10),
-            AppReusableTextField(
+            PasswordInputField(
               controller: _passwordController,
-              hideText: hidePassword,
-              outlined: true,
-              labelText: 'Password*',
-              contentPadding: null,
-              suffixIcon: IconButton(
-                onPressed: _togglePasswordVisibility,
-                icon: Icon(
-                  hidePassword ? Icons.visibility : Icons.visibility_off,
-                  color: context.theme.primaryColor,
-                ),
-              ),
-              validate: true,
+              hidePassword: hidePassword,
+              togglePasswordVisibility: _togglePasswordVisibility,
               validator: (_) => _signUpForm.password.displayError?.errorText,
             ),
             const SizedBox(height: 10),
-            AppReusableTextField(
+            ConfirmPasswordInputField(
               controller: _confirmPasswordController,
-              hideText: hidePassword,
-              outlined: true,
-              labelText: 'Confirm Password*',
-              textInputAction: TextInputAction.done,
-              contentPadding: null,
-              suffixIcon: IconButton(
-                onPressed: _togglePasswordVisibility,
-                icon: Icon(
-                  hidePassword ? Icons.visibility : Icons.visibility_off,
-                  color: context.theme.primaryColor,
-                ),
-              ),
-              validate: true,
+              hidePassword: hidePassword,
+              togglePasswordVisibility: _togglePasswordVisibility,
               validator: (_) =>
                   _signUpForm.confirmPassword.displayError?.errorText,
             ),
