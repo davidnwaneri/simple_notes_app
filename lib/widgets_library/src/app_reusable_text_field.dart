@@ -9,6 +9,7 @@ class AppReusableTextField extends StatelessWidget {
     required TextEditingController controller,
     this.textInputAction = TextInputAction.next,
     this.textInputType,
+    this.autovalidateMode = AutovalidateMode.onUserInteraction,
     this.contentPadding = const EdgeInsets.symmetric(horizontal: 15),
     this.suffixIcon,
     this.hintText,
@@ -25,6 +26,7 @@ class AppReusableTextField extends StatelessWidget {
   final TextEditingController _controller;
   final TextInputAction textInputAction;
   final TextInputType? textInputType;
+  final AutovalidateMode? autovalidateMode;
   final EdgeInsetsGeometry? contentPadding;
   final Widget? suffixIcon;
   final String? hintText;
@@ -48,6 +50,7 @@ class AppReusableTextField extends StatelessWidget {
         controller: _controller,
         textInputAction: textInputAction,
         textInputType: textInputType,
+        autovalidateMode: autovalidateMode,
         contentPadding: contentPadding,
         hintText: hintText,
         labelText: labelText,
@@ -81,6 +84,7 @@ class AppOutlinedReusableTextField extends StatelessWidget {
     required TextEditingController controller,
     this.textInputAction,
     this.textInputType,
+    this.autovalidateMode,
     this.contentPadding,
     this.suffixIcon,
     this.hintText,
@@ -94,6 +98,7 @@ class AppOutlinedReusableTextField extends StatelessWidget {
   final TextEditingController _controller;
   final TextInputAction? textInputAction;
   final TextInputType? textInputType;
+  final AutovalidateMode? autovalidateMode;
   final EdgeInsetsGeometry? contentPadding;
   final Widget? suffixIcon;
   final String? hintText;
@@ -123,10 +128,13 @@ class AppOutlinedReusableTextField extends StatelessWidget {
         border: _border,
         enabledBorder: _border,
         focusedBorder: _border,
+        focusedErrorBorder: _border,
+        errorBorder: _border,
         hintText: hintText,
         labelText: labelText,
         suffixIcon: suffixIcon,
       ),
+      autovalidateMode: autovalidateMode,
       validator: validate ? validator : null,
     );
   }
