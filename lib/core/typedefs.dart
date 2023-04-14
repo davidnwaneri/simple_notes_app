@@ -2,5 +2,12 @@ import 'package:fpdart/fpdart.dart';
 import 'package:simple_notes_app/core/failure.dart';
 import 'package:simple_notes_app/models/models.dart';
 
-typedef FutureEitherNotes = Future<Either<Failure, List<Note>>>;
-typedef FutureEitherVoid = Future<Either<Failure, Unit>>;
+typedef FutureEither<T> = Future<Either<Failure, T>>;
+
+typedef FutureEitherUser = FutureEither<User>;
+
+typedef FutureEitherUserSession = FutureEither<UserSession>;
+
+typedef FutureEitherNotes = FutureEither<List<Note>>;
+
+typedef FutureEitherVoid = FutureEither<Unit>;

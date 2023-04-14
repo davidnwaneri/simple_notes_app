@@ -1,9 +1,13 @@
+import 'package:appwrite/appwrite.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:simple_notes_app/router/app_router.dart';
+import 'package:simple_notes_app/service/service.dart';
 import 'package:simple_notes_app/theme/app_theme.dart';
+import 'package:simple_notes_app/view/authentication/sign_in/bloc/sign_in_bloc.dart';
+import 'package:simple_notes_app/view/authentication/sign_up/bloc/sign_up_bloc.dart';
 import 'package:simple_notes_app/view/settings/theme_bloc/theme_bloc.dart';
 
 Future<void> main() async {
@@ -13,9 +17,49 @@ Future<void> main() async {
   );
 
   runApp(
-    BlocProvider<ThemeBloc>(
-      create: (_) => ThemeBloc(),
-      child: const SimpleNotesApp(),
+    MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider<Client>(
+          create: (context) {
+            final client = Client();
+            return client
+                .setEndpoint(const String.fromEnvironment('APPWRITE_ENDPOINT'))
+                .setProject(const String.fromEnvironment('APPWRITE_PROJECT_ID'))
+                .setSelfSigned();
+          },
+        ),
+        RepositoryProvider<Account>(
+          create: (context) => Account(context.read<Client>()),
+        ),
+        RepositoryProvider<ISignUpRemoteService>(
+          create: (context) => SignUpRemoteServiceWithAppWrite(
+            context.read<Account>(),
+          ),
+        ),
+        RepositoryProvider<SignInRemoteServiceWithAppWrite>(
+          create: (context) => SignInRemoteServiceWithAppWrite(
+            context.read<Account>(),
+          ),
+        ),
+      ],
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider<ThemeBloc>(
+            create: (context) => ThemeBloc(),
+          ),
+          BlocProvider<SignUpBloc>(
+            create: (context) => SignUpBloc(
+              authService: context.read<ISignUpRemoteService>(),
+            ),
+          ),
+          BlocProvider<SignInBloc>(
+            create: (context) => SignInBloc(
+              signInService: context.read<SignInRemoteServiceWithAppWrite>(),
+            ),
+          ),
+        ],
+        child: const SimpleNotesApp(),
+      ),
     ),
   );
 }
