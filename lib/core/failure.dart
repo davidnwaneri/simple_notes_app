@@ -20,3 +20,7 @@ class FetchingNotesFailure extends Failure {
 class SignUpFailure extends Failure {
   SignUpFailure(super.message, {super.stackTrace});
 }
+
+class SignInFailure extends Failure {
+  SignInFailure(super.message, {super.stackTrace});
+}

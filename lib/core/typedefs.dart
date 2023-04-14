@@ -6,6 +6,8 @@ typedef FutureEither<T> = Future<Either<Failure, T>>;
 
 typedef FutureEitherUser = FutureEither<User>;
 
+typedef FutureEitherUserSession = FutureEither<UserSession>;
+
 typedef FutureEitherNotes = FutureEither<List<Note>>;
 
 typedef FutureEitherVoid = FutureEither<Unit>;
