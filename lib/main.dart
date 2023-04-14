@@ -6,6 +6,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:simple_notes_app/router/app_router.dart';
 import 'package:simple_notes_app/service/service.dart';
 import 'package:simple_notes_app/theme/app_theme.dart';
+import 'package:simple_notes_app/view/authentication/sign_in/bloc/sign_in_bloc.dart';
 import 'package:simple_notes_app/view/authentication/sign_up/bloc/sign_up_bloc.dart';
 import 'package:simple_notes_app/view/settings/theme_bloc/theme_bloc.dart';
 
@@ -49,6 +50,11 @@ Future<void> main() async {
           BlocProvider<SignUpBloc>(
             create: (context) => SignUpBloc(
               authService: context.read<ISignUpRemoteService>(),
+            ),
+          ),
+          BlocProvider<SignInBloc>(
+            create: (context) => SignInBloc(
+              signInService: context.read<SignInRemoteServiceWithAppWrite>(),
             ),
           ),
         ],

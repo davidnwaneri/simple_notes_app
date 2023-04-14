@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:simple_notes_app/core/constants.dart';
 import 'package:simple_notes_app/core/extensions.dart';
+import 'package:simple_notes_app/core/loading_indicator_mixin.dart';
+import 'package:simple_notes_app/view/authentication/sign_in/bloc/sign_in_bloc.dart';
 import 'package:simple_notes_app/widgets_library/widgets_library.dart';
 
 class SignInScreen extends StatelessWidget {
@@ -25,7 +27,8 @@ class MainSignInScreen extends StatefulWidget {
   State<MainSignInScreen> createState() => _MainSignInScreenState();
 }
 
-class _MainSignInScreenState extends State<MainSignInScreen> {
+class _MainSignInScreenState extends State<MainSignInScreen>
+    with LoadingIndicatorMixin {
   late final TextEditingController _emailController;
   late final TextEditingController _passwordController;
 
@@ -47,8 +50,24 @@ class _MainSignInScreenState extends State<MainSignInScreen> {
     context.read<HidePasswordCubit>().toggle();
   }
 
+  void _signInBlocListener(BuildContext context, SignInState state) {
+    state.maybeWhen(
+      orElse: () {},
+      loading: showLoadingIndicator,
+      success: (session) {
+        removeLoadingIndicator();
+        context.showSnackBar('Signed in successfully');
+        'UserSession: $session'.log();
+      },
+      error: (error) {
+        removeLoadingIndicator();
+        context.showSnackBar(error);
+      },
+    );
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget buildWidget(BuildContext context) {
     final hidePassword = context.watch<HidePasswordCubit>().state;
     return Scaffold(
       appBar: AppBar(
@@ -87,8 +106,18 @@ class _MainSignInScreenState extends State<MainSignInScreen> {
               ),
             ),
             const SizedBox(height: 30),
-            SignInButton(
-              onTap: () {},
+            BlocListener<SignInBloc, SignInState>(
+              listener: _signInBlocListener,
+              child: SignInButton(
+                onTap: () {
+                  context.read<SignInBloc>().add(
+                        SignInEventStarted(
+                          email: _emailController.text,
+                          password: _passwordController.text,
+                        ),
+                      );
+                },
+              ),
             ),
             const SizedBox(height: 30),
             const RedirectToSignUpText(),
