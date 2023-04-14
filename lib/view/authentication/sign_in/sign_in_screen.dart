@@ -50,6 +50,10 @@ class _MainSignInScreenState extends State<MainSignInScreen>
     context.read<HidePasswordCubit>().toggle();
   }
 
+  void _dismissKeyboard() {
+    FocusManager.instance.primaryFocus?.unfocus();
+  }
+
   void _signInBlocListener(BuildContext context, SignInState state) {
     state.maybeWhen(
       orElse: () {},
@@ -69,59 +73,63 @@ class _MainSignInScreenState extends State<MainSignInScreen>
   @override
   Widget buildWidget(BuildContext context) {
     final hidePassword = context.watch<HidePasswordCubit>().state;
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text('Sign In'),
-        leading: const BackButton(),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: horizontalPadding),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            AppReusableTextField(
-              controller: _emailController,
-              labelText: 'Email',
-              outlined: true,
-              textInputType: TextInputType.emailAddress,
-              contentPadding: null,
-              validate: true,
-            ),
-            const SizedBox(height: 10),
-            AppReusableTextField(
-              controller: _passwordController,
-              hideText: hidePassword,
-              outlined: true,
-              labelText: 'Password',
-              textInputAction: TextInputAction.done,
-              contentPadding: null,
-              suffixIcon: IconButton(
-                onPressed: _togglePasswordVisibility,
-                icon: Icon(
-                  hidePassword ? Icons.visibility : Icons.visibility_off,
-                  color: context.theme.primaryColor,
+    return GestureDetector(
+      onTap: _dismissKeyboard,
+      child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: const Text('Sign In'),
+          leading: const BackButton(),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: horizontalPadding),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              AppReusableTextField(
+                controller: _emailController,
+                labelText: 'Email',
+                outlined: true,
+                textInputType: TextInputType.emailAddress,
+                contentPadding: null,
+                validate: true,
+              ),
+              const SizedBox(height: 10),
+              AppReusableTextField(
+                controller: _passwordController,
+                hideText: hidePassword,
+                outlined: true,
+                labelText: 'Password',
+                textInputAction: TextInputAction.done,
+                contentPadding: null,
+                suffixIcon: IconButton(
+                  onPressed: _togglePasswordVisibility,
+                  icon: Icon(
+                    hidePassword ? Icons.visibility : Icons.visibility_off,
+                    color: context.theme.primaryColor,
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 30),
-            BlocListener<SignInBloc, SignInState>(
-              listener: _signInBlocListener,
-              child: SignInButton(
-                onTap: () {
-                  context.read<SignInBloc>().add(
-                        SignInEventStarted(
-                          email: _emailController.text,
-                          password: _passwordController.text,
-                        ),
-                      );
-                },
+              const SizedBox(height: 30),
+              BlocListener<SignInBloc, SignInState>(
+                listener: _signInBlocListener,
+                child: SignInButton(
+                  onTap: () {
+                    _dismissKeyboard();
+                    context.read<SignInBloc>().add(
+                          SignInEventStarted(
+                            email: _emailController.text,
+                            password: _passwordController.text,
+                          ),
+                        );
+                  },
+                ),
               ),
-            ),
-            const SizedBox(height: 30),
-            const RedirectToSignUpText(),
-          ],
+              const SizedBox(height: 30),
+              const RedirectToSignUpText(),
+            ],
+          ),
         ),
       ),
     );
