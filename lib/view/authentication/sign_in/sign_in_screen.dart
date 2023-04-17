@@ -6,6 +6,7 @@ import 'package:simple_notes_app/core/constants.dart';
 import 'package:simple_notes_app/core/extensions.dart';
 import 'package:simple_notes_app/core/form_fields_validation/form_field_validation.dart';
 import 'package:simple_notes_app/core/loading_indicator_mixin.dart';
+import 'package:simple_notes_app/view/authentication/sign_in/bloc/auth/auth_bloc.dart';
 import 'package:simple_notes_app/view/authentication/sign_in/bloc/sign_in/sign_in_bloc.dart';
 import 'package:simple_notes_app/widgets_library/widgets_library.dart';
 
@@ -105,7 +106,8 @@ class _MainSignInScreenState extends State<MainSignInScreen>
       loading: showLoadingIndicator,
       success: (session) {
         removeLoadingIndicator();
-        context.showSnackBar('Signed in successfully');
+        context.read<AuthBloc>().add(const CurrentLoggedInUserFetched());
+        context.pop<void>();
         'UserSession: $session'.log();
       },
       error: (error) {
