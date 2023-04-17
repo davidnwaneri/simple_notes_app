@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:simple_notes_app/service/src/authentication/sign_up_remote_service.dart';
+import 'package:simple_notes_app/service/src/registration/sign_up_remote_service.dart';
 
 part 'sign_up_bloc.freezed.dart';
 part 'sign_up_event.dart';

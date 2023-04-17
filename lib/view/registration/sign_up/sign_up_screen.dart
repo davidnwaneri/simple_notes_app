@@ -6,7 +6,7 @@ import 'package:simple_notes_app/core/constants.dart';
 import 'package:simple_notes_app/core/extensions.dart';
 import 'package:simple_notes_app/core/form_fields_validation/form_field_validation.dart';
 import 'package:simple_notes_app/core/loading_indicator_mixin.dart';
-import 'package:simple_notes_app/view/authentication/sign_up/bloc/sign_up_bloc.dart';
+import 'package:simple_notes_app/view/registration//sign_up/bloc/sign_up_bloc.dart';
 import 'package:simple_notes_app/widgets_library/widgets_library.dart';
 
 part 'widgets/signup_screen_input_fields.dart';
