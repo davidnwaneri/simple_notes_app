@@ -9,8 +9,8 @@ part 'auth_bloc.freezed.dart';
 part 'auth_event.dart';
 part 'auth_state.dart';
 
-class UserAccountBloc extends Bloc<AuthEvent, AuthState> {
-  UserAccountBloc({
+class AuthBloc extends Bloc<AuthEvent, AuthState> {
+  AuthBloc({
     required IUserAccountRemoteService userAccountRemoteService,
   })  : _userAccountRemoteService = userAccountRemoteService,
         super(const AuthState.initial()) {

@@ -62,8 +62,8 @@ Future<void> main() async {
               signInService: context.read<SignInRemoteServiceWithAppWrite>(),
             ),
           ),
-          BlocProvider<UserAccountBloc>(
-            create: (context) => UserAccountBloc(
+          BlocProvider<AuthBloc>(
+            create: (context) => AuthBloc(
               userAccountRemoteService:
                   context.read<UserAccountRemoteServiceWithAppWrite>(),
             ),
@@ -96,7 +96,7 @@ class _SimpleNotesAppState extends State<SimpleNotesApp> {
   }
 
   void _getCurrentUser() {
-    context.read<UserAccountBloc>().add(const CurrentLoggedInUserFetched());
+    context.read<AuthBloc>().add(const CurrentLoggedInUserFetched());
   }
 
   @override
