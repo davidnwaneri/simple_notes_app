@@ -7,7 +7,6 @@ import 'package:simple_notes_app/router/app_router.dart';
 import 'package:simple_notes_app/service/service.dart';
 import 'package:simple_notes_app/theme/app_theme.dart';
 import 'package:simple_notes_app/view/authentication/authentication.dart';
-import 'package:simple_notes_app/view/profile/bloc/auth_bloc.dart';
 import 'package:simple_notes_app/view/registration/registration.dart';
 import 'package:simple_notes_app/view/settings/theme_bloc/theme_bloc.dart';
 
