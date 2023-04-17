@@ -20,9 +20,9 @@ class UserAccountRemoteServiceWithAppWrite
       final acct = await _account.get();
       final user = UserAdapter.fromAccount(acct);
       return some(user);
-    } on AppwriteException catch (e, st) {
+    } on AppwriteException catch (_) {
       return none();
-    } catch (e, st) {
+    } catch (_) {
       return none();
     }
   }
