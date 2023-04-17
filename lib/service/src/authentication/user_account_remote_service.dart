@@ -4,7 +4,7 @@ import 'package:fpdart/fpdart.dart';
 import 'package:simple_notes_app/core/typedefs.dart';
 import 'package:simple_notes_app/models/models.dart';
 
-mixin IUserAccountRemoteService {
+abstract class IUserAccountRemoteService {
   FutureNullableUser getCurrentUser();
 }
 
