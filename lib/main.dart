@@ -8,6 +8,7 @@ import 'package:simple_notes_app/service/service.dart';
 import 'package:simple_notes_app/theme/app_theme.dart';
 import 'package:simple_notes_app/view/authentication/sign_in/bloc/sign_in_bloc.dart';
 import 'package:simple_notes_app/view/authentication/sign_up/bloc/sign_up_bloc.dart';
+import 'package:simple_notes_app/view/profile/bloc/auth_bloc.dart';
 import 'package:simple_notes_app/view/settings/theme_bloc/theme_bloc.dart';
 
 Future<void> main() async {
@@ -41,6 +42,11 @@ Future<void> main() async {
             context.read<Account>(),
           ),
         ),
+        RepositoryProvider<UserAccountRemoteServiceWithAppWrite>(
+          create: (context) => UserAccountRemoteServiceWithAppWrite(
+            context.read<Account>(),
+          ),
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -55,6 +61,12 @@ Future<void> main() async {
           BlocProvider<SignInBloc>(
             create: (context) => SignInBloc(
               signInService: context.read<SignInRemoteServiceWithAppWrite>(),
+            ),
+          ),
+          BlocProvider<UserAccountBloc>(
+            create: (context) => UserAccountBloc(
+              userAccountRemoteService:
+                  context.read<UserAccountRemoteServiceWithAppWrite>(),
             ),
           ),
         ],
@@ -80,6 +92,12 @@ class _SimpleNotesAppState extends State<SimpleNotesApp> {
     super.initState();
     _appTheme = IAppTheme.withFlexColorScheme();
     _appRouter = AppRouter();
+
+    _getCurrentUser();
+  }
+
+  void _getCurrentUser() {
+    context.read<UserAccountBloc>().add(const CurrentLoggedInUserFetched());
   }
 
   @override
