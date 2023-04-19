@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:simple_notes_app/core/local_storage/local_storage.dart';
 import 'package:simple_notes_app/router/app_router.dart';
 import 'package:simple_notes_app/service/service.dart';
 import 'package:simple_notes_app/theme/app_theme.dart';
@@ -15,6 +17,8 @@ Future<void> main() async {
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: await getApplicationSupportDirectory(),
   );
+
+  final sharedPreferences = await SharedPreferences.getInstance();
 
   runApp(
     MultiRepositoryProvider(
@@ -44,6 +48,11 @@ Future<void> main() async {
         RepositoryProvider<UserAccountRemoteServiceWithAppWrite>(
           create: (context) => UserAccountRemoteServiceWithAppWrite(
             context.read<Account>(),
+          ),
+        ),
+        RepositoryProvider<LocalStorageServiceWithSharedPref>(
+          create: (context) => LocalStorageServiceWithSharedPref(
+            plugin: sharedPreferences,
           ),
         ),
       ],
