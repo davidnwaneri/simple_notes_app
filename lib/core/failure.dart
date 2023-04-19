@@ -25,6 +25,10 @@ class SignInFailure extends Failure {
   SignInFailure(super.message, {super.stackTrace});
 }
 
+class SignOutFailure extends Failure {
+  SignOutFailure(super.message, {super.stackTrace});
+}
+
 class SaveDataFailure extends Failure {
   SaveDataFailure(super.message, {super.stackTrace});
 }

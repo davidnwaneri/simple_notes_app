@@ -1,11 +1,13 @@
 import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart' as models;
 import 'package:fpdart/fpdart.dart';
+import 'package:simple_notes_app/core/failure.dart';
 import 'package:simple_notes_app/core/typedefs.dart';
 import 'package:simple_notes_app/models/models.dart';
 
 abstract class IUserAccountRemoteService {
   FutureNullableUser getCurrentUser();
+  FutureEitherVoid signOut({required String sessionId});
 }
 
 class UserAccountRemoteServiceWithAppWrite
@@ -24,6 +26,28 @@ class UserAccountRemoteServiceWithAppWrite
       return none();
     } catch (_) {
       return none();
+    }
+  }
+
+  @override
+  FutureEitherVoid signOut({required String sessionId}) async {
+    try {
+      await _account.deleteSession(sessionId: sessionId);
+      return right(unit);
+    } on AppwriteException catch (e, st) {
+      return left(
+        SignOutFailure(
+          e.message ?? 'An error occurred',
+          stackTrace: st,
+        ),
+      );
+    } catch (e, st) {
+      return left(
+        SignOutFailure(
+          'An unexpected error occurred',
+          stackTrace: st,
+        ),
+      );
     }
   }
 }

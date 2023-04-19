@@ -1,11 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-
+import 'package:simple_notes_app/view/authentication/sign_in/bloc/auth/auth_bloc.dart';
+import 'package:simple_notes_app/view/authentication/sign_in/bloc/sign_in/sign_in_bloc.dart';
 
 class ItemTilesArea extends StatelessWidget {
   const ItemTilesArea({
     super.key,
   });
+
+  void _logOut(BuildContext context) {
+    final sigInBloc = context.read<SignInBloc>();
+    sigInBloc.state.maybeWhen(
+      success: () {
+        context.read<AuthBloc>().add(const UserSignedOut());
+      },
+      orElse: () => null,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +41,7 @@ class ItemTilesArea extends StatelessWidget {
           ItemTile(
             icon: Icons.logout_outlined,
             title: 'Logout',
-            onTap: () {},
+            onTap: () => _logOut(context),
           ),
         ],
       ),

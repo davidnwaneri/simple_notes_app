@@ -16,6 +16,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   })  : _repository = repository,
         super(const AuthState.initial()) {
     on<CurrentLoggedInUserFetched>(_onFetchUserAccount);
+    on<UserSignedOut>(_onSignOut);
   }
 
   final IUserAccountRepository _repository;
@@ -29,6 +30,20 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     result.fold(
       () => emit(const AuthState.signedOut()),
       (user) => emit(AuthState.signedIn(user)),
+    );
+  }
+
+  Future<void> _onSignOut(UserSignedOut event, Emitter<AuthState> emit) async {
+    emit(const AuthState.loading());
+    final sessionIdOrNull = _repository.getUserSessionId();
+    await sessionIdOrNull.fold(
+      () => null,
+      (sessionId) async {
+        await _repository.signOut(
+          sessionId: sessionId,
+        );
+        emit(const AuthState.signedOut());
+      },
     );
   }
 

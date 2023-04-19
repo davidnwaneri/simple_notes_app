@@ -10,3 +10,7 @@ abstract class AuthEvent extends Equatable {
 class CurrentLoggedInUserFetched extends AuthEvent {
   const CurrentLoggedInUserFetched();
 }
+
+class UserSignedOut extends AuthEvent {
+  const UserSignedOut();
+}

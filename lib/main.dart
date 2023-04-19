@@ -73,6 +73,8 @@ Future<void> main() async {
         ),
         RepositoryProvider<UserAccountRepository>(
           create: (context) => UserAccountRepository(
+            signInLocalStorageService:
+                context.read<SignInLocalStorageService>(),
             localStorageService: context.read<UserAccountLocalStorageService>(),
             remoteService: context.read<UserAccountRemoteServiceWithAppWrite>(),
           ),
