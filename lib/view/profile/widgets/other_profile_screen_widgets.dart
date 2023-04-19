@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:simple_notes_app/view/authentication/sign_in/bloc/auth/auth_bloc.dart';
-import 'package:simple_notes_app/view/authentication/sign_in/bloc/sign_in/sign_in_bloc.dart';
 
 class ItemTilesArea extends StatelessWidget {
   const ItemTilesArea({
@@ -10,9 +9,9 @@ class ItemTilesArea extends StatelessWidget {
   });
 
   void _logOut(BuildContext context) {
-    final sigInBloc = context.read<SignInBloc>();
+    final sigInBloc = context.read<AuthBloc>();
     sigInBloc.state.maybeWhen(
-      success: () {
+      signedIn: (_) {
         context.read<AuthBloc>().add(const UserSignedOut());
       },
       orElse: () => null,
