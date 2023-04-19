@@ -42,7 +42,7 @@ Future<void> main() async {
         RepositoryProvider<Account>(
           create: (context) => Account(context.read<Client>()),
         ),
-        RepositoryProvider<ISignUpRemoteService>(
+        RepositoryProvider<SignUpRemoteServiceWithAppWrite>(
           create: (context) => SignUpRemoteServiceWithAppWrite(
             context.read<Account>(),
           ),
@@ -65,13 +65,13 @@ Future<void> main() async {
         RepositoryProvider<SignInLocalStorageService>(
           create: (context) => SignInLocalStorageService(
             localStorageService:
-            context.read<LocalStorageServiceWithSharedPref>(),
+                context.read<LocalStorageServiceWithSharedPref>(),
           ),
         ),
         RepositoryProvider<UserAccountLocalStorageService>(
           create: (context) => UserAccountLocalStorageService(
             localStorageService:
-            context.read<LocalStorageServiceWithSharedPref>(),
+                context.read<LocalStorageServiceWithSharedPref>(),
           ),
         ),
         RepositoryProvider<UserAccountRepository>(
@@ -96,7 +96,7 @@ Future<void> main() async {
           ),
           BlocProvider<SignUpBloc>(
             create: (context) => SignUpBloc(
-              authService: context.read<ISignUpRemoteService>(),
+              authService: context.read<SignUpRemoteServiceWithAppWrite>(),
             ),
           ),
           BlocProvider<SignInBloc>(
