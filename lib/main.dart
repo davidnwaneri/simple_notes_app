@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:appwrite/appwrite.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -5,6 +7,7 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simple_notes_app/core/local_storage/local_storage.dart';
+import 'package:simple_notes_app/core/local_storage/local_storage_form.dart';
 import 'package:simple_notes_app/router/app_router.dart';
 import 'package:simple_notes_app/service/service.dart';
 import 'package:simple_notes_app/service/src/authentication/sign_in_local_storage_service.dart';
@@ -104,7 +107,11 @@ Future<void> main() async {
           BlocProvider<AuthBloc>(
             create: (context) => AuthBloc(
               repository: context.read<UserAccountRepository>(),
-                  context.read<UserAccountRemoteServiceWithAppWrite>(),
+              localStorageForm: LocalStorageForm(
+                localStorageServices: UnmodifiableListView([
+                  context.read<LocalStorageServiceWithSharedPref>(),
+                ]),
+              ),
             ),
           ),
         ],
