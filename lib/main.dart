@@ -8,7 +8,9 @@ import 'package:simple_notes_app/core/local_storage/local_storage.dart';
 import 'package:simple_notes_app/router/app_router.dart';
 import 'package:simple_notes_app/service/service.dart';
 import 'package:simple_notes_app/service/src/authentication/sign_in_local_storage_service.dart';
+import 'package:simple_notes_app/service/src/authentication/user_account_local_storage_service.dart';
 import 'package:simple_notes_app/service/src/sign_in_repository.dart';
+import 'package:simple_notes_app/service/src/user_account_repository.dart';
 import 'package:simple_notes_app/theme/app_theme.dart';
 import 'package:simple_notes_app/view/authentication/authentication.dart';
 import 'package:simple_notes_app/view/registration/registration.dart';
@@ -63,6 +65,18 @@ Future<void> main() async {
             context.read<LocalStorageServiceWithSharedPref>(),
           ),
         ),
+        RepositoryProvider<UserAccountLocalStorageService>(
+          create: (context) => UserAccountLocalStorageService(
+            localStorageService:
+            context.read<LocalStorageServiceWithSharedPref>(),
+          ),
+        ),
+        RepositoryProvider<UserAccountRepository>(
+          create: (context) => UserAccountRepository(
+            localStorageService: context.read<UserAccountLocalStorageService>(),
+            remoteService: context.read<UserAccountRemoteServiceWithAppWrite>(),
+          ),
+        ),
         RepositoryProvider<SignInRepository>(
           create: (context) => SignInRepository(
             localStorageService: context.read<SignInLocalStorageService>(),
@@ -87,7 +101,7 @@ Future<void> main() async {
           ),
           BlocProvider<AuthBloc>(
             create: (context) => AuthBloc(
-              userAccountRemoteService:
+              repository: context.read<UserAccountRepository>(),
                   context.read<UserAccountRemoteServiceWithAppWrite>(),
             ),
           ),
