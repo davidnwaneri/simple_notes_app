@@ -7,6 +7,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simple_notes_app/core/local_storage/local_storage.dart';
 import 'package:simple_notes_app/router/app_router.dart';
 import 'package:simple_notes_app/service/service.dart';
+import 'package:simple_notes_app/service/src/authentication/sign_in_local_storage_service.dart';
+import 'package:simple_notes_app/service/src/sign_in_repository.dart';
 import 'package:simple_notes_app/theme/app_theme.dart';
 import 'package:simple_notes_app/view/authentication/authentication.dart';
 import 'package:simple_notes_app/view/registration/registration.dart';
@@ -55,6 +57,18 @@ Future<void> main() async {
             plugin: sharedPreferences,
           ),
         ),
+        RepositoryProvider<SignInLocalStorageService>(
+          create: (context) => SignInLocalStorageService(
+            localStorageService:
+            context.read<LocalStorageServiceWithSharedPref>(),
+          ),
+        ),
+        RepositoryProvider<SignInRepository>(
+          create: (context) => SignInRepository(
+            localStorageService: context.read<SignInLocalStorageService>(),
+            remoteService: context.read<SignInRemoteServiceWithAppWrite>(),
+          ),
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -68,7 +82,7 @@ Future<void> main() async {
           ),
           BlocProvider<SignInBloc>(
             create: (context) => SignInBloc(
-              signInService: context.read<SignInRemoteServiceWithAppWrite>(),
+              repository: context.read<SignInRepository>(),
             ),
           ),
           BlocProvider<AuthBloc>(

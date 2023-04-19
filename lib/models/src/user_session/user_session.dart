@@ -12,6 +12,6 @@ class UserSession with _$UserSession {
     required String expireAt,
   }) = _UserSession;
 
-  factory UserSession.fromJson(Map<String, Object> json) =>
+  factory UserSession.fromJson(Map<String, Object?> json) =>
       _$UserSessionFromJson(json);
 }

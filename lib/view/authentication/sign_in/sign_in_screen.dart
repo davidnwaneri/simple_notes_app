@@ -104,11 +104,10 @@ class _MainSignInScreenState extends State<MainSignInScreen>
     state.maybeWhen(
       orElse: () {},
       loading: showLoadingIndicator,
-      success: (session) {
+      success: () {
         removeLoadingIndicator();
         context.read<AuthBloc>().add(const CurrentLoggedInUserFetched());
         context.pop<void>();
-        'UserSession: $session'.log();
       },
       error: (error) {
         removeLoadingIndicator();
