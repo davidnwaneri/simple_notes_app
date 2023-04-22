@@ -1,12 +1,18 @@
+// 📦 Package imports:
 import 'package:fpdart/fpdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+// 🌎 Project imports:
 import 'package:simple_notes_app/core/failure.dart';
 import 'package:simple_notes_app/core/typedefs.dart';
 
 abstract class ILocalStorageService {
   FutureEitherVoid save({required String key, required String value});
+
   Option<String> read(String key);
+
   FutureEitherVoid delete(String key);
+
   FutureVoid clear();
 }
 

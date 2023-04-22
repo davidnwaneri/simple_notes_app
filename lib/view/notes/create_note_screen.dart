@@ -1,4 +1,7 @@
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+
+// 🌎 Project imports:
 import 'package:simple_notes_app/widgets_library/widgets_library.dart';
 
 class CreateNoteScreen extends StatefulWidget {

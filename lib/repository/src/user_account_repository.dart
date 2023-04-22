@@ -1,6 +1,10 @@
+// 🎯 Dart imports:
 import 'dart:async';
 
+// 📦 Package imports:
 import 'package:fpdart/fpdart.dart';
+
+// 🌎 Project imports:
 import 'package:simple_notes_app/core/typedefs.dart';
 import 'package:simple_notes_app/local_storage_service/local_storage_service.dart';
 import 'package:simple_notes_app/models/models.dart';
@@ -42,7 +46,7 @@ class UserAccountRepository implements IUserAccountRepository {
       final userOrNullFromRemote = await _remoteService.getCurrentUser();
       return userOrNullFromRemote.fold(
         none,
-        (user) async {
+            (user) async {
           userDataToSave = user;
           return some(user);
         },

@@ -1,5 +1,7 @@
+// 🎯 Dart imports:
 import 'dart:collection';
 
+// 🌎 Project imports:
 import 'package:simple_notes_app/core/typedefs.dart';
 import 'package:simple_notes_app/local_storage_service/core/local_storage.dart';
 

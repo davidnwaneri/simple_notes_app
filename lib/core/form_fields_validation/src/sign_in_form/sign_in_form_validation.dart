@@ -1,4 +1,7 @@
+// 📦 Package imports:
 import 'package:formz/formz.dart';
+
+// 🌎 Project imports:
 import 'package:simple_notes_app/core/form_fields_validation/src/email_validation.dart';
 import 'package:simple_notes_app/core/form_fields_validation/src/sign_in_form/password_validation.dart';
 

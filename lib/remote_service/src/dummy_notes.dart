@@ -1,5 +1,7 @@
+// 🎯 Dart imports:
 import 'dart:collection';
 
+// 🌎 Project imports:
 import 'package:simple_notes_app/models/models.dart';
 
 UnmodifiableListView<Note> get dummyNotes {

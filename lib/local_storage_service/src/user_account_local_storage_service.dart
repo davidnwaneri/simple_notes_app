@@ -1,6 +1,10 @@
+// 🎯 Dart imports:
 import 'dart:convert';
 
+// 📦 Package imports:
 import 'package:fpdart/fpdart.dart';
+
+// 🌎 Project imports:
 import 'package:simple_notes_app/core/typedefs.dart';
 import 'package:simple_notes_app/local_storage_service/local_storage_service.dart';
 import 'package:simple_notes_app/models/models.dart';

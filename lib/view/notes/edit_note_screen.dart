@@ -1,6 +1,11 @@
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+
+// 📦 Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+
+// 🌎 Project imports:
 import 'package:simple_notes_app/core/extensions.dart';
 import 'package:simple_notes_app/models/models.dart';
 import 'package:simple_notes_app/widgets_library/widgets_library.dart';
@@ -86,7 +91,7 @@ class _MainEditNoteScreenState extends State<MainEditNoteScreen> {
       return;
     }
     _showWarningDialogOnPop().then(
-      (shouldPop) {
+          (shouldPop) {
         if (shouldPop != null && shouldPop) {
           context.pop<void>();
         }

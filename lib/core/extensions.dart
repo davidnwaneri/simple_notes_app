@@ -1,6 +1,10 @@
+// 🎯 Dart imports:
 import 'dart:developer' as devtools show log;
 
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+
+// 🌎 Project imports:
 import 'package:simple_notes_app/models/models.dart';
 
 extension Log on Object? {

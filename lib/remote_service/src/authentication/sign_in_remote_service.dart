@@ -1,6 +1,9 @@
+// 📦 Package imports:
 import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart' as models;
 import 'package:fpdart/fpdart.dart';
+
+// 🌎 Project imports:
 import 'package:simple_notes_app/core/extensions.dart';
 import 'package:simple_notes_app/core/failure.dart';
 import 'package:simple_notes_app/core/typedefs.dart';

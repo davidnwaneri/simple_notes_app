@@ -1,6 +1,11 @@
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+
+// 📦 Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+
+// 🌎 Project imports:
 import 'package:simple_notes_app/models/models.dart';
 import 'package:simple_notes_app/remote_service/remote_service.dart';
 import 'package:simple_notes_app/view/notes/bloc/fetch_notes_bloc.dart';

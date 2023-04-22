@@ -1,5 +1,10 @@
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+
+// 📦 Package imports:
 import 'package:go_router/go_router.dart';
+
+// 🌎 Project imports:
 import 'package:simple_notes_app/models/models.dart';
 import 'package:simple_notes_app/widgets_library/widgets_library.dart';
 

@@ -1,5 +1,10 @@
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+
+// 📦 Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+// 🌎 Project imports:
 import 'package:simple_notes_app/view/authentication/authentication.dart';
 import 'package:simple_notes_app/view/profile/widgets/other_profile_screen_widgets.dart';
 import 'package:simple_notes_app/view/profile/widgets/profile_card.dart';

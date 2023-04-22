@@ -1,6 +1,10 @@
+// 🎯 Dart imports:
 import 'dart:ui';
 
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+
+// 📦 Package imports:
 import 'package:lottie/lottie.dart';
 
 mixin LoadingIndicatorMixin<T extends StatefulWidget> on State<T> {

@@ -1,11 +1,17 @@
+// 🎯 Dart imports:
 import 'dart:collection';
 
-import 'package:appwrite/appwrite.dart';
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+
+// 📦 Package imports:
+import 'package:appwrite/appwrite.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+// 🌎 Project imports:
 import 'package:simple_notes_app/local_storage_service/local_storage_service.dart';
 import 'package:simple_notes_app/remote_service/remote_service.dart';
 import 'package:simple_notes_app/repository/repository.dart';
@@ -61,19 +67,19 @@ Future<void> main() async {
         RepositoryProvider<SignInLocalStorageService>(
           create: (context) => SignInLocalStorageService(
             localStorageService:
-                context.read<LocalStorageServiceWithSharedPref>(),
+            context.read<LocalStorageServiceWithSharedPref>(),
           ),
         ),
         RepositoryProvider<UserAccountLocalStorageService>(
           create: (context) => UserAccountLocalStorageService(
             localStorageService:
-                context.read<LocalStorageServiceWithSharedPref>(),
+            context.read<LocalStorageServiceWithSharedPref>(),
           ),
         ),
         RepositoryProvider<UserAccountRepository>(
           create: (context) => UserAccountRepository(
             signInLocalStorageService:
-                context.read<SignInLocalStorageService>(),
+            context.read<SignInLocalStorageService>(),
             localStorageService: context.read<UserAccountLocalStorageService>(),
             remoteService: context.read<UserAccountRemoteServiceWithAppWrite>(),
           ),

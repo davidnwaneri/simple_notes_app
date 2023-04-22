@@ -29,6 +29,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   freezed: ^2.3.2
+  import_sorter: ^4.6.0
   json_serializable: ^6.6.1
   very_good_analysis: ^4.0.0+1
 
@@ -37,3 +38,6 @@ flutter:
 
   assets:
     - assets/lottie/
+
+import_sorter:
+  emojis: true
