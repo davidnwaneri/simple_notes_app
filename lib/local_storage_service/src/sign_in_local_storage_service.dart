@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:fpdart/fpdart.dart';
-import 'package:simple_notes_app/core/local_storage/local_storage.dart';
 import 'package:simple_notes_app/core/typedefs.dart';
+import 'package:simple_notes_app/local_storage_service/local_storage_service.dart';
 import 'package:simple_notes_app/models/models.dart';
 
 mixin ISignInLocalStorageService {

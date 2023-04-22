@@ -1,7 +1,7 @@
 import 'dart:collection';
 
-import 'package:simple_notes_app/core/local_storage/local_storage.dart';
 import 'package:simple_notes_app/core/typedefs.dart';
+import 'package:simple_notes_app/local_storage_service/core/local_storage.dart';
 
 class LocalStorageForm {
   LocalStorageForm({

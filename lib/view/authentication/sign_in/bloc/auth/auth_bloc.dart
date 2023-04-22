@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:simple_notes_app/core/extensions.dart';
-import 'package:simple_notes_app/core/local_storage/local_storage_form.dart';
+import 'package:simple_notes_app/local_storage_service/local_storage_service.dart';
 import 'package:simple_notes_app/models/models.dart';
 import 'package:simple_notes_app/service/src/user_account_repository.dart';
 

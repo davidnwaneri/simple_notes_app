@@ -2,9 +2,8 @@ import 'dart:async';
 
 import 'package:fpdart/fpdart.dart';
 import 'package:simple_notes_app/core/typedefs.dart';
+import 'package:simple_notes_app/local_storage_service/local_storage_service.dart';
 import 'package:simple_notes_app/models/models.dart';
-import 'package:simple_notes_app/service/src/authentication/sign_in_local_storage_service.dart';
-import 'package:simple_notes_app/service/src/authentication/user_account_local_storage_service.dart';
 import 'package:simple_notes_app/service/src/authentication/user_account_remote_service.dart';
 
 abstract class IUserAccountRepository {
