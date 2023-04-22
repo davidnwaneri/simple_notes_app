@@ -56,13 +56,13 @@ class UserAccountRemoteServiceWithAppWrite
   }
 }
 
-/// Converts [models.Account] to [User]
+/// Converts [models.User] to [User]
 class UserAdapter {
-  static User fromAccount(models.Account account) {
+  static User fromAccount(models.User user) {
     return User(
-      id: account.$id,
-      name: account.name,
-      email: account.email,
+      id: user.$id,
+      name: user.name,
+      email: user.email,
     );
   }
 }
