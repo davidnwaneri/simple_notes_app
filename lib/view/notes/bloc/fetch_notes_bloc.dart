@@ -15,14 +15,14 @@ part 'fetch_notes_state.dart';
 
 class FetchNotesBloc extends Bloc<FetchNotesEvent, FetchNotesState> {
   FetchNotesBloc({
-    required INoteService noteService,
+    required INoteRemoteService noteService,
   })  : _noteService = noteService,
         super(const _Initial()) {
     on<NotesFetched>(_onNotesFetched);
     add(const NotesFetched());
   }
 
-  final INoteService _noteService;
+  final INoteRemoteService _noteService;
 
   Future<void> _onNotesFetched(
     NotesFetched event,

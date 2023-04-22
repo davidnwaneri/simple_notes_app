@@ -7,13 +7,13 @@ import 'package:simple_notes_app/core/typedefs.dart';
 import 'package:simple_notes_app/models/models.dart';
 import 'package:simple_notes_app/remote_service/src/note/dummy_notes.dart';
 
-abstract class INoteService {
+abstract class INoteRemoteService {
   FutureEitherNotes fetchNotes();
 
   FutureEitherVoid createNote(Note note);
 }
 
-class DummyNoteService implements INoteService {
+class DummyNoteService implements INoteRemoteService {
   @override
   FutureEitherNotes fetchNotes() async {
     try {
