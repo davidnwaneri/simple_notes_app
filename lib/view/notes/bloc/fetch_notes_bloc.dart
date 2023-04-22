@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:simple_notes_app/models/models.dart';
-import 'package:simple_notes_app/service/service.dart';
+import 'package:simple_notes_app/remote_service/remote_service.dart';
 
 part 'fetch_notes_bloc.freezed.dart';
 part 'fetch_notes_event.dart';

@@ -2,7 +2,7 @@ import 'package:fpdart/fpdart.dart';
 import 'package:simple_notes_app/core/failure.dart';
 import 'package:simple_notes_app/core/typedefs.dart';
 import 'package:simple_notes_app/models/models.dart';
-import 'package:simple_notes_app/service/src/dummy_notes.dart';
+import 'package:simple_notes_app/remote_service/src/dummy_notes.dart';
 
 abstract class INoteService {
   FutureEitherNotes fetchNotes();
