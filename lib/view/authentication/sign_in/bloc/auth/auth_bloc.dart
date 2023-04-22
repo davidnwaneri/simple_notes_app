@@ -4,7 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:simple_notes_app/core/extensions.dart';
 import 'package:simple_notes_app/local_storage_service/local_storage_service.dart';
 import 'package:simple_notes_app/models/models.dart';
-import 'package:simple_notes_app/service/src/user_account_repository.dart';
+import 'package:simple_notes_app/repository/repository.dart';
 
 part 'auth_bloc.freezed.dart';
 part 'auth_event.dart';

@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:simple_notes_app/service/src/sign_in_repository.dart';
+import 'package:simple_notes_app/repository/repository.dart';
 
 part 'sign_in_bloc.freezed.dart';
 part 'sign_in_event.dart';
