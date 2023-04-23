@@ -106,6 +106,18 @@ Future<void> main() async {
                 context.read<UserAccountLocalStorageService>(),
           ),
         ),
+        RepositoryProvider<FetchNotesRemoteServiceWithAppWrite>(
+          create: (context) => FetchNotesRemoteServiceWithAppWrite(
+            databases: context.read<Databases>(),
+          ),
+        ),
+        RepositoryProvider<FetchNotesRepositoryImpl>(
+          create: (context) => FetchNotesRepositoryImpl(
+            remoteService: context.read<FetchNotesRemoteServiceWithAppWrite>(),
+            userAccountLocalStorageService:
+                context.read<UserAccountLocalStorageService>(),
+          ),
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
