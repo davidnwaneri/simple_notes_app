@@ -19,6 +19,7 @@ import 'package:simple_notes_app/router/app_router.dart';
 import 'package:simple_notes_app/theme/app_theme.dart';
 import 'package:simple_notes_app/view/authentication/authentication.dart';
 import 'package:simple_notes_app/view/notes/create_note/bloc/create_note_bloc.dart';
+import 'package:simple_notes_app/view/notes/delete_note/bloc/delete_note_bloc.dart';
 import 'package:simple_notes_app/view/notes/edit_note/bloc/edit_note_bloc.dart';
 import 'package:simple_notes_app/view/registration/registration.dart';
 import 'package:simple_notes_app/view/settings/theme_bloc/theme_bloc.dart';
@@ -129,6 +130,16 @@ Future<void> main() async {
             remoteService: context.read<EditNoteRemoteServiceWithAppWrite>(),
           ),
         ),
+        RepositoryProvider<DeleteNoteRemoteServiceWithAppWrite>(
+          create: (context) => DeleteNoteRemoteServiceWithAppWrite(
+            databases: context.read<Databases>(),
+          ),
+        ),
+        RepositoryProvider<DeleteNoteRepositoryImpl>(
+          create: (context) => DeleteNoteRepositoryImpl(
+            remoteService: context.read<DeleteNoteRemoteServiceWithAppWrite>(),
+          ),
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -164,6 +175,13 @@ Future<void> main() async {
             create: (context) {
               return EditNoteBloc(
                 repository: context.read<EditNoteRepositoryImpl>(),
+              );
+            },
+          ),
+          BlocProvider<DeleteNoteBloc>(
+            create: (context) {
+              return DeleteNoteBloc(
+                repository: context.read<DeleteNoteRepositoryImpl>(),
               );
             },
           ),

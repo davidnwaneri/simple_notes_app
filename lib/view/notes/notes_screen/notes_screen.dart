@@ -9,6 +9,7 @@ import 'package:go_router/go_router.dart';
 import 'package:simple_notes_app/core/extensions.dart';
 import 'package:simple_notes_app/models/models.dart';
 import 'package:simple_notes_app/view/authentication/authentication.dart';
+import 'package:simple_notes_app/view/notes/delete_note/bloc/delete_note_bloc.dart';
 import 'package:simple_notes_app/view/notes/notes_screen/bloc/fetch_notes_bloc.dart';
 import 'package:simple_notes_app/widgets_library/widgets_library.dart';
 
@@ -103,6 +104,39 @@ class NotesScreenListView extends StatelessWidget {
 
   final List<Note> notes;
 
+  void _onDeleteNote({
+    required BuildContext context,
+    required Note note,
+  }) {
+    context.read<DeleteNoteBloc>().add(DeleteNoteStarted(note: note));
+    context.read<FetchNotesBloc>().add(const NotesFetched());
+  }
+
+  Future<bool?> _showConfirmDialogOnDelete(BuildContext context) {
+    return showDialog<bool>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Delete note?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                context.pop<bool>(false);
+              },
+              child: const Text('No'),
+            ),
+            TextButton(
+              onPressed: () {
+                context.pop<bool>(true);
+              },
+              child: const Text('Yes'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SliverList(
@@ -110,18 +144,61 @@ class NotesScreenListView extends StatelessWidget {
         childCount: notes.length,
         (context, index) {
           final note = notes[index];
-          return NoteTile(
-            title: note.title ?? note.titleFromBody,
-            shortInfo: note.body,
-            lastModified: note.lastModified!,
-            onTap: () {
-              context.push<void>(
-                '/notes/${note.id}/details',
-                extra: note,
-              );
-            },
+          return Dismissible(
+            key: ValueKey(note.id),
+            direction: DismissDirection.endToStart,
+            background: const DismissibleBackground(
+              icon: Icons.delete,
+              color: Colors.red,
+            ),
+            onDismissed: (_) => _onDeleteNote(
+              context: context,
+              note: note,
+            ),
+            confirmDismiss: (_) => _showConfirmDialogOnDelete(context),
+            child: NoteTile(
+              title: note.title ?? note.titleFromBody,
+              shortInfo: note.body,
+              lastModified: note.lastModified!,
+              onTap: () {
+                context.push<void>(
+                  '/notes/${note.id}/details',
+                  extra: note,
+                );
+              },
+            ),
           );
         },
+      ),
+    );
+  }
+}
+
+class DismissibleBackground extends StatelessWidget {
+  const DismissibleBackground({
+    required this.icon,
+    required this.color,
+    super.key,
+  });
+
+  final IconData icon;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return ColoredBox(
+      color: color,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(right: 20),
+            child: Icon(
+              icon,
+              color: Colors.white,
+            ),
+          ),
+        ],
       ),
     );
   }
