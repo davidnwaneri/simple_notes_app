@@ -75,7 +75,7 @@ class _CreateNoteScreenState extends State<CreateNoteScreen>
   Widget buildWidget(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edit Note'),
+        title: const Text('Create Note'),
         leading: const BackButton(),
         actions: [
           BlocListener<CreateNoteBloc, CreateNoteState>(
