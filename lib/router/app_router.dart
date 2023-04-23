@@ -88,7 +88,7 @@ class AppRouter {
                 create: (_) => CurrentIndexCubit(),
               ),
               BlocProvider<FetchNotesBloc>(
-                create: (_) => FetchNotesBloc(
+                create: (context) => FetchNotesBloc(
                   repository: context.read<FetchNotesRepositoryImpl>(),
                 ),
               ),

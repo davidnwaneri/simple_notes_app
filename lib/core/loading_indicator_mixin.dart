@@ -124,6 +124,10 @@ mixin LoadingIndicatorMixin<T extends StatefulWidget> on State<T> {
 
   Widget buildWidget(BuildContext context);
 
+  void dismissKeyboard() {
+    FocusManager.instance.primaryFocus?.unfocus();
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(

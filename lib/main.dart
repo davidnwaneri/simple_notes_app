@@ -19,6 +19,7 @@ import 'package:simple_notes_app/router/app_router.dart';
 import 'package:simple_notes_app/theme/app_theme.dart';
 import 'package:simple_notes_app/view/authentication/authentication.dart';
 import 'package:simple_notes_app/view/notes/create_note/bloc/create_note_bloc.dart';
+import 'package:simple_notes_app/view/notes/edit_note/bloc/edit_note_bloc.dart';
 import 'package:simple_notes_app/view/registration/registration.dart';
 import 'package:simple_notes_app/view/settings/theme_bloc/theme_bloc.dart';
 
@@ -118,6 +119,16 @@ Future<void> main() async {
                 context.read<UserAccountLocalStorageService>(),
           ),
         ),
+        RepositoryProvider<EditNoteRemoteServiceWithAppWrite>(
+          create: (context) => EditNoteRemoteServiceWithAppWrite(
+            databases: context.read<Databases>(),
+          ),
+        ),
+        RepositoryProvider<EditNoteRepositoryImpl>(
+          create: (context) => EditNoteRepositoryImpl(
+            remoteService: context.read<EditNoteRemoteServiceWithAppWrite>(),
+          ),
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -148,6 +159,13 @@ Future<void> main() async {
             create: (context) => CreateNoteBloc(
               repository: context.read<CreateNoteRepositoryImpl>(),
             ),
+          ),
+          BlocProvider<EditNoteBloc>(
+            create: (context) {
+              return EditNoteBloc(
+                repository: context.read<EditNoteRepositoryImpl>(),
+              );
+            },
           ),
         ],
         child: const SimpleNotesApp(),

@@ -7,7 +7,9 @@ import 'package:go_router/go_router.dart';
 
 // 🌎 Project imports:
 import 'package:simple_notes_app/core/extensions.dart';
+import 'package:simple_notes_app/core/loading_indicator_mixin.dart';
 import 'package:simple_notes_app/models/models.dart';
+import 'package:simple_notes_app/view/notes/edit_note/bloc/edit_note_bloc.dart';
 import 'package:simple_notes_app/widgets_library/widgets_library.dart';
 
 class HasEditedNoteCubit extends Cubit<bool> {
@@ -49,7 +51,8 @@ class MainEditNoteScreen extends StatefulWidget {
   State<MainEditNoteScreen> createState() => _MainEditNoteScreenState();
 }
 
-class _MainEditNoteScreenState extends State<MainEditNoteScreen> {
+class _MainEditNoteScreenState extends State<MainEditNoteScreen>
+    with LoadingIndicatorMixin {
   late final TextEditingController _titleController;
   late final TextEditingController _bodyController;
 
@@ -91,7 +94,7 @@ class _MainEditNoteScreenState extends State<MainEditNoteScreen> {
       return;
     }
     _showWarningDialogOnPop().then(
-          (shouldPop) {
+      (shouldPop) {
         if (shouldPop != null && shouldPop) {
           context.pop<void>();
         }
@@ -100,7 +103,12 @@ class _MainEditNoteScreenState extends State<MainEditNoteScreen> {
   }
 
   void _onSaveButtonPressed() {
-    'Save button pressed'.log();
+    final editedNote = widget.note.copyWith(
+      title: _titleController.text,
+      body: _bodyController.text,
+    );
+    dismissKeyboard();
+    context.read<EditNoteBloc>().add(EditNoteStarted(note: editedNote));
   }
 
   Future<bool?> _showWarningDialogOnPop() {
@@ -128,8 +136,28 @@ class _MainEditNoteScreenState extends State<MainEditNoteScreen> {
     );
   }
 
+  void _editNoteBlocListener(BuildContext context, EditNoteState state) {
+    state.maybeWhen(
+      orElse: () {
+        removeLoadingIndicator();
+      },
+      inProgress: showLoadingIndicator,
+      success: () {
+        removeLoadingIndicator();
+        showSuccessIndicator(
+          message: 'Note edited successfully',
+          onDismissed: () => context.pop<void>(),
+        );
+      },
+      failure: (message) {
+        removeLoadingIndicator();
+        context.showSnackBar(message);
+      },
+    );
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget buildWidget(BuildContext context) {
     final hasEditedNote = context.watch<HasEditedNoteCubit>().state;
     return WillPopScope(
       onWillPop: () async {
@@ -146,9 +174,12 @@ class _MainEditNoteScreenState extends State<MainEditNoteScreen> {
             onPressed: _onBackButtonPressed,
           ),
           actions: [
-            IconButton(
-              icon: const Icon(Icons.save),
-              onPressed: hasEditedNote ? _onSaveButtonPressed : null,
+            BlocListener<EditNoteBloc, EditNoteState>(
+              listener: _editNoteBlocListener,
+              child: IconButton(
+                icon: const Icon(Icons.save),
+                onPressed: hasEditedNote ? _onSaveButtonPressed : null,
+              ),
             ),
           ],
         ),
