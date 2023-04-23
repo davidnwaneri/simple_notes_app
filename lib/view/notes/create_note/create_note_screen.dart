@@ -44,6 +44,7 @@ class _CreateNoteScreenState extends State<CreateNoteScreen>
         title: _titleController.text,
         body: _descriptionController.text,
       );
+      _dismissKeyboard();
       context.read<CreateNoteBloc>().add(CreateNoteStarted(note: note));
     }
   }
@@ -52,7 +53,7 @@ class _CreateNoteScreenState extends State<CreateNoteScreen>
     state.maybeWhen(
       orElse: () {},
       loading: showLoadingIndicator,
-      success: (){
+      success: () {
         removeLoadingIndicator();
         showSuccessIndicator(
           message: 'Note created successfully',
@@ -64,6 +65,10 @@ class _CreateNoteScreenState extends State<CreateNoteScreen>
         context.showSnackBar(message);
       },
     );
+  }
+
+  void _dismissKeyboard() {
+    FocusManager.instance.primaryFocus?.unfocus();
   }
 
   @override
