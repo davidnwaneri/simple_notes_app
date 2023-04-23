@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+// 🌎 Project imports:
+import 'package:simple_notes_app/view/authentication/sign_in/bloc/auth/auth_bloc.dart';
+
 class BottomNavigationScaffold extends StatefulWidget {
   const BottomNavigationScaffold({
     required this.child,
@@ -40,18 +43,45 @@ class _BottomNavigationScaffoldState extends State<BottomNavigationScaffold> {
     context.go(location);
   }
 
+  Future<void> _showSignInDialog() {
+    return showDialog<void>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('You are not signed in'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                context
+                  ..pop() // Pop the dialog
+                  ..push('/auth/sign-in');
+              },
+              child: const Text('Sign in'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final currentIndex = context.watch<CurrentIndexCubit>().state;
+    final isUserLoggedIn = context.watch<AuthBloc>().state.maybeWhen(
+          orElse: () => false,
+          signedIn: (_) => true,
+        );
     return Scaffold(
       extendBody: true,
       body: widget.child,
       floatingActionButton: (currentIndex == 0)
           ? FloatingActionButton(
               onPressed: () {
-                context.push<void>(
-                  '/notes/create',
-                );
+                if (!isUserLoggedIn) {
+                  _showSignInDialog();
+                } else {
+                  context.push<void>('/notes/create');
+                }
               },
               child: const Icon(Icons.add),
             )

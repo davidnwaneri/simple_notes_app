@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 // 🌎 Project imports:
 import 'package:simple_notes_app/core/extensions.dart';
 import 'package:simple_notes_app/models/models.dart';
+import 'package:simple_notes_app/view/authentication/authentication.dart';
 import 'package:simple_notes_app/view/notes/bloc/fetch_notes_bloc.dart';
 import 'package:simple_notes_app/widgets_library/widgets_library.dart';
 
@@ -16,11 +17,17 @@ class NotesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isUserLoggedIn = context.watch<AuthBloc>().state.maybeWhen(
+          orElse: () => false,
+          signedIn: (_) => true,
+        );
     return Scaffold(
       body: RefreshIndicator(
         edgeOffset: 100,
         onRefresh: () async {
-          context.read<FetchNotesBloc>().add(const NotesFetched());
+          if (isUserLoggedIn) {
+            context.read<FetchNotesBloc>().add(const NotesFetched());
+          }
         },
         child: CustomScrollView(
           slivers: [
@@ -31,6 +38,9 @@ class NotesScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 10),
               sliver: BlocBuilder<FetchNotesBloc, FetchNotesState>(
                 builder: (context, state) {
+                  if (!isUserLoggedIn) {
+                    return const NotSignedInNotesView();
+                  }
                   return state.maybeWhen(
                     orElse: () {
                       return const SliverFillRemaining(
@@ -50,6 +60,33 @@ class NotesScreen extends StatelessWidget {
                   );
                 },
               ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class NotSignedInNotesView extends StatelessWidget {
+  const NotSignedInNotesView({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final maxHeight = MediaQuery.of(context).size.height;
+    final statusBarHeight = MediaQuery.of(context).padding.top;
+    final navBarHeight = MediaQuery.of(context).padding.bottom;
+    return SliverFillRemaining(
+      hasScrollBody: false,
+      child: Center(
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Positioned(
+              top: maxHeight / 2 - statusBarHeight - navBarHeight,
+              child: const Text('Please sign in to see your notes.'),
             ),
           ],
         ),
