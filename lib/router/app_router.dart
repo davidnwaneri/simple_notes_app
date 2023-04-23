@@ -8,7 +8,7 @@ import 'package:go_router/go_router.dart';
 // 🌎 Project imports:
 import 'package:simple_notes_app/models/models.dart';
 import 'package:simple_notes_app/repository/repository.dart';
-import 'package:simple_notes_app/view/notes/bloc/fetch_notes_bloc.dart';
+import 'package:simple_notes_app/view/notes/notes_screen/bloc/fetch_notes_bloc.dart';
 import 'package:simple_notes_app/view/view.dart';
 
 class AppRouter {

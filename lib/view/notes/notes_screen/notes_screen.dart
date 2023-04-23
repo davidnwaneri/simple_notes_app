@@ -9,7 +9,7 @@ import 'package:go_router/go_router.dart';
 import 'package:simple_notes_app/core/extensions.dart';
 import 'package:simple_notes_app/models/models.dart';
 import 'package:simple_notes_app/view/authentication/authentication.dart';
-import 'package:simple_notes_app/view/notes/bloc/fetch_notes_bloc.dart';
+import 'package:simple_notes_app/view/notes/notes_screen/bloc/fetch_notes_bloc.dart';
 import 'package:simple_notes_app/widgets_library/widgets_library.dart';
 
 class NotesScreen extends StatelessWidget {
