@@ -1,12 +1,18 @@
+// 🐦 Flutter imports:
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+
+// 📦 Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+
+// 🌎 Project imports:
 import 'package:simple_notes_app/core/constants.dart';
 import 'package:simple_notes_app/core/extensions.dart';
 import 'package:simple_notes_app/core/form_fields_validation/form_field_validation.dart';
 import 'package:simple_notes_app/core/loading_indicator_mixin.dart';
-import 'package:simple_notes_app/view/authentication/sign_in/bloc/sign_in_bloc.dart';
+import 'package:simple_notes_app/view/authentication/sign_in/bloc/auth/auth_bloc.dart';
+import 'package:simple_notes_app/view/authentication/sign_in/bloc/sign_in/sign_in_bloc.dart';
 import 'package:simple_notes_app/widgets_library/widgets_library.dart';
 
 class SignInScreen extends StatelessWidget {
@@ -103,10 +109,10 @@ class _MainSignInScreenState extends State<MainSignInScreen>
     state.maybeWhen(
       orElse: () {},
       loading: showLoadingIndicator,
-      success: (session) {
+      success: () {
         removeLoadingIndicator();
-        context.showSnackBar('Signed in successfully');
-        'UserSession: $session'.log();
+        context.read<AuthBloc>().add(const CurrentLoggedInUserFetched());
+        context.pop<void>();
       },
       error: (error) {
         removeLoadingIndicator();

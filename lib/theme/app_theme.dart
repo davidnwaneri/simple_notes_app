@@ -1,5 +1,10 @@
-import 'package:flex_color_scheme/flex_color_scheme.dart';
+// 🐦 Flutter imports:
+
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+
+// 📦 Package imports:
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 
 abstract class IAppTheme {
   ThemeData get darkTheme;

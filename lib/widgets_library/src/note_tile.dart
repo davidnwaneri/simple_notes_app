@@ -1,4 +1,7 @@
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+
+// 🌎 Project imports:
 import 'package:simple_notes_app/core/extensions.dart';
 
 class NoteTile extends StatelessWidget {
@@ -30,12 +33,13 @@ class NoteTile extends StatelessWidget {
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
                 title,
                 style: context.textTheme.bodyLarge?.copyWith(
                   fontWeight: FontWeight.w500,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
               const SizedBox(height: 4),

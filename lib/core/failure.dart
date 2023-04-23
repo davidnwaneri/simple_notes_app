@@ -24,3 +24,31 @@ class SignUpFailure extends Failure {
 class SignInFailure extends Failure {
   SignInFailure(super.message, {super.stackTrace});
 }
+
+class SignOutFailure extends Failure {
+  SignOutFailure(super.message, {super.stackTrace});
+}
+
+class SaveDataFailure extends Failure {
+  SaveDataFailure(super.message, {super.stackTrace});
+}
+
+class ReadDataFailure extends Failure {
+  ReadDataFailure(super.message, {super.stackTrace});
+}
+
+class DeleteDataFailure extends Failure {
+  DeleteDataFailure(super.message, {super.stackTrace});
+}
+
+class CreateNoteFailure extends Failure {
+  CreateNoteFailure(super.message, {super.stackTrace});
+}
+
+class EditNoteFailure extends Failure {
+  EditNoteFailure(super.message, {super.stackTrace});
+}
+
+class DeleteNoteFailure extends Failure {
+  DeleteNoteFailure(super.message, {super.stackTrace});
+}

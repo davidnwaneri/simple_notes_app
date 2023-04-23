@@ -1,3 +1,4 @@
+// 📦 Package imports:
 import 'package:formz/formz.dart';
 
 enum ConfirmPasswordValidationError {
@@ -8,14 +9,12 @@ enum ConfirmPasswordValidationError {
   final String errorText;
 }
 
-class ConfirmPasswordInput
-    extends FormzInput<String, ConfirmPasswordValidationError> {
+class ConfirmPasswordInput extends FormzInput<String, ConfirmPasswordValidationError> {
   const ConfirmPasswordInput.pure({
     this.password = '',
   }) : super.pure('');
 
-  const ConfirmPasswordInput.dirty(
-    super.value, {
+  const ConfirmPasswordInput.dirty(super.value, {
     required this.password,
   }) : super.dirty();
 

@@ -1,3 +1,4 @@
+// 📦 Package imports:
 import 'package:formz/formz.dart';
 
 enum SignInPasswordValidationError {
@@ -8,8 +9,7 @@ enum SignInPasswordValidationError {
   final String errorText;
 }
 
-class SignInPasswordInput
-    extends FormzInput<String, SignInPasswordValidationError> {
+class SignInPasswordInput extends FormzInput<String, SignInPasswordValidationError> {
   const SignInPasswordInput.pure() : super.pure('');
 
   const SignInPasswordInput.dirty(super.value) : super.dirty();

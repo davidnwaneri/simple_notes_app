@@ -1,5 +1,7 @@
+// 🎯 Dart imports:
 import 'dart:math' as math;
 
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
 part 'custom_outline_input_border.dart';

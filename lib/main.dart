@@ -1,13 +1,27 @@
-import 'package:appwrite/appwrite.dart';
+// 🎯 Dart imports:
+import 'dart:collection';
+
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+
+// 📦 Package imports:
+import 'package:appwrite/appwrite.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+// 🌎 Project imports:
+import 'package:simple_notes_app/local_storage_service/local_storage_service.dart';
+import 'package:simple_notes_app/remote_service/remote_service.dart';
+import 'package:simple_notes_app/repository/repository.dart';
 import 'package:simple_notes_app/router/app_router.dart';
-import 'package:simple_notes_app/service/service.dart';
 import 'package:simple_notes_app/theme/app_theme.dart';
-import 'package:simple_notes_app/view/authentication/sign_in/bloc/sign_in_bloc.dart';
-import 'package:simple_notes_app/view/authentication/sign_up/bloc/sign_up_bloc.dart';
+import 'package:simple_notes_app/view/authentication/authentication.dart';
+import 'package:simple_notes_app/view/notes/create_note/bloc/create_note_bloc.dart';
+import 'package:simple_notes_app/view/notes/delete_note/bloc/delete_note_bloc.dart';
+import 'package:simple_notes_app/view/notes/edit_note/bloc/edit_note_bloc.dart';
+import 'package:simple_notes_app/view/registration/registration.dart';
 import 'package:simple_notes_app/view/settings/theme_bloc/theme_bloc.dart';
 
 Future<void> main() async {
@@ -15,6 +29,8 @@ Future<void> main() async {
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: await getApplicationSupportDirectory(),
   );
+
+  final sharedPreferences = await SharedPreferences.getInstance();
 
   runApp(
     MultiRepositoryProvider(
@@ -31,7 +47,10 @@ Future<void> main() async {
         RepositoryProvider<Account>(
           create: (context) => Account(context.read<Client>()),
         ),
-        RepositoryProvider<ISignUpRemoteService>(
+        RepositoryProvider<Databases>(
+          create: (context) => Databases(context.read<Client>()),
+        ),
+        RepositoryProvider<SignUpRemoteServiceWithAppWrite>(
           create: (context) => SignUpRemoteServiceWithAppWrite(
             context.read<Account>(),
           ),
@@ -39,6 +58,86 @@ Future<void> main() async {
         RepositoryProvider<SignInRemoteServiceWithAppWrite>(
           create: (context) => SignInRemoteServiceWithAppWrite(
             context.read<Account>(),
+          ),
+        ),
+        RepositoryProvider<UserAccountRemoteServiceWithAppWrite>(
+          create: (context) => UserAccountRemoteServiceWithAppWrite(
+            context.read<Account>(),
+          ),
+        ),
+        RepositoryProvider<LocalStorageServiceWithSharedPref>(
+          create: (context) => LocalStorageServiceWithSharedPref(
+            plugin: sharedPreferences,
+          ),
+        ),
+        RepositoryProvider<SignInLocalStorageService>(
+          create: (context) => SignInLocalStorageService(
+            localStorageService:
+                context.read<LocalStorageServiceWithSharedPref>(),
+          ),
+        ),
+        RepositoryProvider<UserAccountLocalStorageService>(
+          create: (context) => UserAccountLocalStorageService(
+            localStorageService:
+                context.read<LocalStorageServiceWithSharedPref>(),
+          ),
+        ),
+        RepositoryProvider<UserAccountRepository>(
+          create: (context) => UserAccountRepository(
+            signInLocalStorageService:
+                context.read<SignInLocalStorageService>(),
+            localStorageService: context.read<UserAccountLocalStorageService>(),
+            remoteService: context.read<UserAccountRemoteServiceWithAppWrite>(),
+          ),
+        ),
+        RepositoryProvider<SignInRepository>(
+          create: (context) => SignInRepository(
+            localStorageService: context.read<SignInLocalStorageService>(),
+            remoteService: context.read<SignInRemoteServiceWithAppWrite>(),
+          ),
+        ),
+        RepositoryProvider<CreateNoteRemoteServiceWithAppWrite>(
+          create: (context) => CreateNoteRemoteServiceWithAppWrite(
+            databases: context.read<Databases>(),
+          ),
+        ),
+        RepositoryProvider<CreateNoteRepositoryImpl>(
+          create: (context) => CreateNoteRepositoryImpl(
+            remoteService: context.read<CreateNoteRemoteServiceWithAppWrite>(),
+            userAccountLocalStorageService:
+                context.read<UserAccountLocalStorageService>(),
+          ),
+        ),
+        RepositoryProvider<FetchNotesRemoteServiceWithAppWrite>(
+          create: (context) => FetchNotesRemoteServiceWithAppWrite(
+            databases: context.read<Databases>(),
+          ),
+        ),
+        RepositoryProvider<FetchNotesRepositoryImpl>(
+          create: (context) => FetchNotesRepositoryImpl(
+            remoteService: context.read<FetchNotesRemoteServiceWithAppWrite>(),
+            userAccountLocalStorageService:
+                context.read<UserAccountLocalStorageService>(),
+          ),
+        ),
+        RepositoryProvider<EditNoteRemoteServiceWithAppWrite>(
+          create: (context) => EditNoteRemoteServiceWithAppWrite(
+            databases: context.read<Databases>(),
+          ),
+        ),
+        RepositoryProvider<EditNoteRepositoryImpl>(
+          create: (context) => EditNoteRepositoryImpl(
+            remoteService: context.read<EditNoteRemoteServiceWithAppWrite>(),
+          ),
+        ),
+        RepositoryProvider<DeleteNoteRemoteServiceWithAppWrite>(
+          create: (context) => DeleteNoteRemoteServiceWithAppWrite(
+            databases: context.read<Databases>(),
+          ),
+        ),
+        RepositoryProvider<DeleteNoteRepositoryImpl>(
+          create: (context) => DeleteNoteRepositoryImpl(
+            remoteService: context.read<DeleteNoteRemoteServiceWithAppWrite>(),
           ),
         ),
       ],
@@ -49,13 +148,42 @@ Future<void> main() async {
           ),
           BlocProvider<SignUpBloc>(
             create: (context) => SignUpBloc(
-              authService: context.read<ISignUpRemoteService>(),
+              authService: context.read<SignUpRemoteServiceWithAppWrite>(),
             ),
           ),
           BlocProvider<SignInBloc>(
             create: (context) => SignInBloc(
-              signInService: context.read<SignInRemoteServiceWithAppWrite>(),
+              repository: context.read<SignInRepository>(),
             ),
+          ),
+          BlocProvider<AuthBloc>(
+            create: (context) => AuthBloc(
+              repository: context.read<UserAccountRepository>(),
+              localStorageForm: LocalStorageForm(
+                localStorageServices: UnmodifiableListView([
+                  context.read<LocalStorageServiceWithSharedPref>(),
+                ]),
+              ),
+            ),
+          ),
+          BlocProvider<CreateNoteBloc>(
+            create: (context) => CreateNoteBloc(
+              repository: context.read<CreateNoteRepositoryImpl>(),
+            ),
+          ),
+          BlocProvider<EditNoteBloc>(
+            create: (context) {
+              return EditNoteBloc(
+                repository: context.read<EditNoteRepositoryImpl>(),
+              );
+            },
+          ),
+          BlocProvider<DeleteNoteBloc>(
+            create: (context) {
+              return DeleteNoteBloc(
+                repository: context.read<DeleteNoteRepositoryImpl>(),
+              );
+            },
           ),
         ],
         child: const SimpleNotesApp(),
@@ -80,6 +208,12 @@ class _SimpleNotesAppState extends State<SimpleNotesApp> {
     super.initState();
     _appTheme = IAppTheme.withFlexColorScheme();
     _appRouter = AppRouter();
+
+    _getCurrentUser();
+  }
+
+  void _getCurrentUser() {
+    context.read<AuthBloc>().add(const CurrentLoggedInUserFetched());
   }
 
   @override

@@ -1,6 +1,10 @@
+// 🎯 Dart imports:
 import 'dart:ui';
 
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+
+// 📦 Package imports:
 import 'package:lottie/lottie.dart';
 
 mixin LoadingIndicatorMixin<T extends StatefulWidget> on State<T> {
@@ -119,6 +123,10 @@ mixin LoadingIndicatorMixin<T extends StatefulWidget> on State<T> {
   }
 
   Widget buildWidget(BuildContext context);
+
+  void dismissKeyboard() {
+    FocusManager.instance.primaryFocus?.unfocus();
+  }
 
   @override
   Widget build(BuildContext context) {

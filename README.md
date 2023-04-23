@@ -28,6 +28,8 @@ The following dependencies were used in the development of this project:
 - [`lottie`](https://pub.dev/packages/lottie): a Flutter package that provides support for Lottie animations.
 - [`path_provider`](https://pub.dev/packages/path_provider): a Flutter package that provides platform-specific locations
   for storing files.
+- [`shared_preferences`](https://pub.dev/packages/shared_preferences): a Flutter package that provides a persistent
+  store for simple data.
 - [`timeago`](https://pub.dev/packages/timeago): a Flutter package that provides human-readable time intervals.
 
 ## Development Dependencies
