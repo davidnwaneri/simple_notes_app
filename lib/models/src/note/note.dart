@@ -8,7 +8,15 @@ part 'note.g.dart';
 class Note with _$Note {
   const factory Note({
     required String body,
-    required String lastModified,
+    /// The last time the note was modified.
+    ///
+    /// This field is made nullable to avoid passing it
+    /// to a [Note] object when creating a new note.
+    ///
+    /// It is also ignored when `toJson` is called to avoid
+    /// passing it to the backend, since the backend will
+    /// generate this field.
+    @JsonKey(includeToJson: false) String? lastModified,
 
     /// A unique identifier for the note.
     ///
@@ -16,8 +24,13 @@ class Note with _$Note {
     /// will be assigned at the backend....So fetching
     /// notes from the backend will have a non-null id.
     String? id,
-    String? title,
+    @JsonKey(fromJson: titleFromJson) String? title,
   }) = _Note;
 
   factory Note.fromJson(Map<String, Object?> json) => _$NoteFromJson(json);
+}
+
+String? titleFromJson(String? title) {
+  if (title == null || title.isEmpty) return null;
+  return title;
 }

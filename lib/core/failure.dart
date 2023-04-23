@@ -40,3 +40,7 @@ class ReadDataFailure extends Failure {
 class DeleteDataFailure extends Failure {
   DeleteDataFailure(super.message, {super.stackTrace});
 }
+
+class CreateNoteFailure extends Failure {
+  CreateNoteFailure(super.message, {super.stackTrace});
+}

@@ -18,6 +18,7 @@ import 'package:simple_notes_app/repository/repository.dart';
 import 'package:simple_notes_app/router/app_router.dart';
 import 'package:simple_notes_app/theme/app_theme.dart';
 import 'package:simple_notes_app/view/authentication/authentication.dart';
+import 'package:simple_notes_app/view/notes/create_note/bloc/create_note_bloc.dart';
 import 'package:simple_notes_app/view/registration/registration.dart';
 import 'package:simple_notes_app/view/settings/theme_bloc/theme_bloc.dart';
 
@@ -44,6 +45,9 @@ Future<void> main() async {
         RepositoryProvider<Account>(
           create: (context) => Account(context.read<Client>()),
         ),
+        RepositoryProvider<Databases>(
+          create: (context) => Databases(context.read<Client>()),
+        ),
         RepositoryProvider<SignUpRemoteServiceWithAppWrite>(
           create: (context) => SignUpRemoteServiceWithAppWrite(
             context.read<Account>(),
@@ -67,19 +71,19 @@ Future<void> main() async {
         RepositoryProvider<SignInLocalStorageService>(
           create: (context) => SignInLocalStorageService(
             localStorageService:
-            context.read<LocalStorageServiceWithSharedPref>(),
+                context.read<LocalStorageServiceWithSharedPref>(),
           ),
         ),
         RepositoryProvider<UserAccountLocalStorageService>(
           create: (context) => UserAccountLocalStorageService(
             localStorageService:
-            context.read<LocalStorageServiceWithSharedPref>(),
+                context.read<LocalStorageServiceWithSharedPref>(),
           ),
         ),
         RepositoryProvider<UserAccountRepository>(
           create: (context) => UserAccountRepository(
             signInLocalStorageService:
-            context.read<SignInLocalStorageService>(),
+                context.read<SignInLocalStorageService>(),
             localStorageService: context.read<UserAccountLocalStorageService>(),
             remoteService: context.read<UserAccountRemoteServiceWithAppWrite>(),
           ),
@@ -88,6 +92,16 @@ Future<void> main() async {
           create: (context) => SignInRepository(
             localStorageService: context.read<SignInLocalStorageService>(),
             remoteService: context.read<SignInRemoteServiceWithAppWrite>(),
+          ),
+        ),
+        RepositoryProvider<CreateNoteRemoteServiceWithAppWrite>(
+          create: (context) => CreateNoteRemoteServiceWithAppWrite(
+            databases: context.read<Databases>(),
+          ),
+        ),
+        RepositoryProvider<CreateNoteRepositoryImpl>(
+          create: (context) => CreateNoteRepositoryImpl(
+            remoteService: context.read<CreateNoteRemoteServiceWithAppWrite>(),
           ),
         ),
       ],
@@ -114,6 +128,11 @@ Future<void> main() async {
                   context.read<LocalStorageServiceWithSharedPref>(),
                 ]),
               ),
+            ),
+          ),
+          BlocProvider<CreateNoteBloc>(
+            create: (context) => CreateNoteBloc(
+              repository: context.read<CreateNoteRepositoryImpl>(),
             ),
           ),
         ],

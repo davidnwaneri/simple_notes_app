@@ -71,12 +71,12 @@ class NotesScreenListView extends StatelessWidget {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         childCount: notes.length,
-            (context, index) {
+        (context, index) {
           final note = notes[index];
           return NoteTile(
             title: note.title ?? note.titleFromBody,
             shortInfo: note.body,
-            lastModified: note.lastModified,
+            lastModified: note.lastModified!,
             onTap: () {
               context.push<void>(
                 '/notes/${note.id}/details',
