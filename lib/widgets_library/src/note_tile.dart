@@ -39,6 +39,7 @@ class NoteTile extends StatelessWidget {
                 title,
                 style: context.textTheme.bodyLarge?.copyWith(
                   fontWeight: FontWeight.w500,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
               const SizedBox(height: 4),
