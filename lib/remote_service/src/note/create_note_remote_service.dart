@@ -36,13 +36,12 @@ class CreateNoteRemoteServiceWithAppWrite implements ICreateNoteRemoteService {
   }) async {
     try {
       final nNote = note.copyWith(
-        id: ID.unique(),
         ownerId: ownerId,
       );
       await _databases.createDocument(
         databaseId: _databaseId,
         collectionId: _collectionId,
-        documentId: ID.unique(),
+        documentId: note.id!,
         data: nNote.toJson(),
       );
       return right(unit);

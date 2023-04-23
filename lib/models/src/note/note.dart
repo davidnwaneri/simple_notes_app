@@ -27,17 +27,20 @@ class Note with _$Note {
 
     /// A unique identifier for the note.
     ///
+    /// This is nullable to avoid passing it to a [Note] object
+    /// when creating a new note in the widgets layer.
+    ///
     /// This id will be initially null but
-    /// will be assigned at the backend....So fetching
+    /// will be assigned when sending to the backend....So fetching
     /// notes from the backend will have a non-null id.
     String? id,
-    @JsonKey(fromJson: titleFromJson) String? title,
+    @JsonKey(fromJson: _titleFromJson) String? title,
   }) = _Note;
 
   factory Note.fromJson(Map<String, Object?> json) => _$NoteFromJson(json);
 }
 
-String? titleFromJson(String? title) {
+String? _titleFromJson(String? title) {
   if (title == null || title.isEmpty) return null;
   return title;
 }
