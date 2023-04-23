@@ -46,11 +46,17 @@ extension DateTimeToTimeAgoExtension on DateTime {
     } else if (difference.inDays > 30) {
       return '${(difference.inDays / 30).floor()} months ago';
     } else if (difference.inDays > 0) {
-      return '${difference.inDays} days ago';
+      final differenceInDays = difference.inDays;
+      final days = differenceInDays > 1 ? 'days' : 'day';
+      return '$differenceInDays $days ago';
     } else if (difference.inHours > 0) {
-      return '${difference.inHours} hours ago';
+      final differenceInHours = difference.inHours;
+      final hours = differenceInHours > 1 ? 'hours' : 'hour';
+      return '$differenceInHours $hours ago';
     } else if (difference.inMinutes > 0) {
-      return '${difference.inMinutes} minutes ago';
+      final differenceInMinutes = difference.inMinutes;
+      final minutes = differenceInMinutes > 1 ? 'minutes' : 'minute';
+      return '$differenceInMinutes $minutes ago';
     } else {
       return 'Just now';
     }
