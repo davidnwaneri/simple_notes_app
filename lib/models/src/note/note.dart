@@ -8,6 +8,7 @@ part 'note.g.dart';
 class Note with _$Note {
   const factory Note({
     required String body,
+
     /// The last time the note was modified.
     ///
     /// This field is made nullable to avoid passing it
@@ -17,6 +18,12 @@ class Note with _$Note {
     /// passing it to the backend, since the backend will
     /// generate this field.
     @JsonKey(includeToJson: false) String? lastModified,
+
+    /// The id of the user who created the note.
+    ///
+    /// This is nullable to avoid passing it to a [Note] object
+    /// when creating a new note in the widgets layer.
+    String? ownerId,
 
     /// A unique identifier for the note.
     ///

@@ -102,6 +102,8 @@ Future<void> main() async {
         RepositoryProvider<CreateNoteRepositoryImpl>(
           create: (context) => CreateNoteRepositoryImpl(
             remoteService: context.read<CreateNoteRemoteServiceWithAppWrite>(),
+            userAccountLocalStorageService:
+                context.read<UserAccountLocalStorageService>(),
           ),
         ),
       ],

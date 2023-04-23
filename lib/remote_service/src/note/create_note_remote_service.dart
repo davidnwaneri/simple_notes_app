@@ -9,7 +9,10 @@ import 'package:simple_notes_app/core/typedefs.dart';
 import 'package:simple_notes_app/models/src/note/note.dart';
 
 mixin ICreateNoteRemoteService {
-  FutureEitherVoid createNote(Note note);
+  FutureEitherVoid createNote({
+    required Note note,
+    required String ownerId,
+  });
 }
 
 class CreateNoteRemoteServiceWithAppWrite implements ICreateNoteRemoteService {
@@ -27,9 +30,15 @@ class CreateNoteRemoteServiceWithAppWrite implements ICreateNoteRemoteService {
   );
 
   @override
-  FutureEitherVoid createNote(Note note) async {
+  FutureEitherVoid createNote({
+    required Note note,
+    required String ownerId,
+  }) async {
     try {
-      final nNote = note.copyWith(id: ID.unique());
+      final nNote = note.copyWith(
+        id: ID.unique(),
+        ownerId: ownerId,
+      );
       await _databases.createDocument(
         databaseId: _databaseId,
         collectionId: _collectionId,
