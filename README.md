@@ -53,19 +53,56 @@ The following development dependencies were used in the development of this proj
 To get started with SimpleNotes, follow these steps:
 
 1. Clone the repository to your local machine.
-2. Create a new Appwrite project and configure the project settings.
-3. Run `flutter pub get` to install the project dependencies.
-4. Run build_runner to generate the code for the freezed classes:
+2. Run `flutter pub get` to install the project dependencies.
+3. Run build_runner to generate the code for the freezed classes:
 
 ```sh
 flutter pub run build_runner build
 ```
 
-5. Run the app using the command:
+5. Create a new Appwrite project and configure the project settings. (See
+   the [Setting up Appwrite](#setting-up-appwrite) section)
+
+
+6. Run the app using the command:
 
 ```sh
 flutter run --dart-define=APPWRITE_ENDPOINT=[your_appwrite_endpoint_url] --dart-define=APPWRITE_PROJECT_ID=[your_appwrite_project_id] --dart-define=APPWRITE_NOTE_DATABASE_ID=[database-id] --dart-define=APPWRITE_NOTE_COLLECTION_ID=[collection-id]
 ```
+
+## Setting up Appwrite
+
+To use Appwrite with SimpleNotes, you need to create a new Appwrite project and configure the project settings.
+Note: Appwrite is packaged as a set of Docker images, so you need to have Docker installed on your machine to run
+Appwrite. Once that is done, proceed with the following steps:
+
+1. Open your browser and access the Appwrite console at localhost
+2. Create an account and sign in.
+3. Create a new project by clicking the `Create Project` button on the Appwrite dashboard.
+4. In the `Overview` tab, scroll down to the `Integrations` section and add a platform by clicking the `Add Platform`
+   button. Select `Flutter App` from the list, and then proceed to register your flutter app for the whatever
+   environment
+   your flutter app will run on (Android, iOS, Web, etc.).
+5. Confirm that `Email/Password` authentication method is enabled by going to the settings section of the `Auth` tab.
+6. Retrieve the project ID from the project settings page and set it as the `APPWRITE_PROJECT_ID` environment variable.
+   And also the endpoint URL and set it as the `APPWRITE_ENDPOINT` environment variable.
+   Note: When running on Android you may need to use the IP address of your machine instead of localhost as the endpoint
+   URL.
+7. Create a new database by going to the `Database` tab and then proceed to retrieve the database ID and set it as
+   the `APPWRITE_NOTE_DATABASE_ID` environment variable.
+8. Create a new collection by clicking on the newly create database and then clicking `Create Collection`. Proceed to
+   retrieve the collection ID and set it as the `APPWRITE_NOTE_COLLECTION_ID` environment variable.
+9. In the newly created collection, go to the `Attributes` section and create the following attributes:
+    - (String) [Attribute Key]: `title` || [Size]: 40 || [Default value]: [empty][Null]
+    - (String) [Attribute Key]: `body` || [Size]: 2000 || [Required]: true
+    - (String) [Attribute Key]: `id` || [Size]: 40 || [Required]: true
+    - (String) [Attribute Key]: `ownedId` || [Size]: 40 || [Required]: true
+
+For more information on how to use Appwrite, check out the [Appwrite documentation](https://appwrite.io/docs).
+
+Note: The --dart-define flag allows you to pass environment variables to your Flutter app at runtime. Make sure to
+replace [your_appwrite_endpoint_url], [your_appwrite_project_id], [database-id], and [collection-id] with the
+appropriate values.
 
 ## Conclusion
 
