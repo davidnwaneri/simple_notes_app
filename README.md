@@ -90,7 +90,7 @@ Appwrite. Once that is done, proceed with the following steps:
    URL.
 7. Create a new database by going to the `Database` tab and then proceed to retrieve the database ID and set it as
    the `APPWRITE_NOTE_DATABASE_ID` environment variable.
-8. Create a new collection by clicking on the newly create database and then clicking `Create Collection`. Proceed to
+8. Create a new collection by clicking on the newly created database and then clicking `Create Collection`. Proceed to
    retrieve the collection ID and set it as the `APPWRITE_NOTE_COLLECTION_ID` environment variable.
 9. In the newly created collection, go to the `Attributes` section and create the following attributes:
     - (String) [Attribute Key]: `title` || [Size]: 40 || [Default value]: [empty][Null]
