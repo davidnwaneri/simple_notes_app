@@ -64,7 +64,7 @@ flutter pub run build_runner build
 5. Run the app using the command:
 
 ```sh
-flutter run --dart-define=APPWRITE_ENDPOINT=[your_appwrite_endpoint_url] --dart-define=APPWRITE_PROJECT_ID=[your_appwrite_project_id]
+flutter run --dart-define=APPWRITE_ENDPOINT=[your_appwrite_endpoint_url] --dart-define=APPWRITE_PROJECT_ID=[your_appwrite_project_id] --dart-define=APPWRITE_NOTE_DATABASE_ID=[database-id] --dart-define=APPWRITE_NOTE_COLLECTION_ID=[collection-id]
 ```
 
 ## Conclusion
