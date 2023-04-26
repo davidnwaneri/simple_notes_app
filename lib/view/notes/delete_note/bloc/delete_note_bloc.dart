@@ -5,6 +5,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 // 🌎 Project imports:
 import 'package:simple_notes_app/models/models.dart';
+import 'package:simple_notes_app/repository/notes_repository.dart';
 import 'package:simple_notes_app/repository/repository.dart';
 
 part 'delete_note_state.dart';
@@ -14,13 +15,13 @@ part 'delete_note_bloc.freezed.dart';
 
 class DeleteNoteBloc extends Bloc<DeleteNoteEvent, DeleteNoteState> {
   DeleteNoteBloc({
-    required IDeleteNoteRepository repository,
+    required NotesRepository repository,
   })  : _repository = repository,
         super(const DeleteNoteState.initial()) {
     on<DeleteNoteStarted>(_onDeleteNoteStarted);
   }
 
-  final IDeleteNoteRepository _repository;
+  final NotesRepository _repository;
 
   Future<void> _onDeleteNoteStarted(
     DeleteNoteStarted event,

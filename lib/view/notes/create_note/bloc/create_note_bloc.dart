@@ -5,6 +5,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 // 🌎 Project imports:
 import 'package:simple_notes_app/models/src/note/note.dart';
+import 'package:simple_notes_app/repository/notes_repository.dart';
 import 'package:simple_notes_app/repository/repository.dart';
 import 'package:uuid/uuid.dart';
 
@@ -15,13 +16,13 @@ part 'create_note_bloc.freezed.dart';
 
 class CreateNoteBloc extends Bloc<CreateNoteEvent, CreateNoteState> {
   CreateNoteBloc({
-    required ICreateNoteRepository repository,
+    required NotesRepository repository,
   })  : _repository = repository,
         super(const CreateNoteState.initial()) {
     on<CreateNoteStarted>(_onCreateNoteStarted);
   }
 
-  final ICreateNoteRepository _repository;
+  final NotesRepository _repository;
 
   Future<void> _onCreateNoteStarted(
     CreateNoteStarted event,

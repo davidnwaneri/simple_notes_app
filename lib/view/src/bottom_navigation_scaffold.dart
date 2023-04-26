@@ -1,5 +1,7 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart'
+    show SystemChrome, SystemUiMode, SystemUiOverlayStyle;
 
 // 📦 Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -71,25 +73,35 @@ class _BottomNavigationScaffoldState extends State<BottomNavigationScaffold> {
           orElse: () => false,
           signedIn: (_) => true,
         );
-    return Scaffold(
-      extendBody: true,
-      body: widget.child,
-      floatingActionButton: (currentIndex == 0)
-          ? FloatingActionButton(
-              onPressed: () {
-                if (!isUserLoggedIn) {
-                  _showSignInDialog();
-                } else {
-                  context.push<void>('/notes/create');
-                }
-              },
-              child: const Icon(Icons.add),
-            )
-          : null,
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: currentIndex,
-        onDestinationSelected: _toggleCurrentIndex,
-        destinations: _destinationItems,
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle.dark.copyWith(
+        systemNavigationBarColor: Colors.transparent,
+      ),
+      child: Scaffold(
+        extendBody: true,
+        extendBodyBehindAppBar: true,
+        body: widget.child,
+        floatingActionButton: (currentIndex == 0)
+            ? FloatingActionButton(
+                onPressed: () {
+                  if (!isUserLoggedIn) {
+                    _showSignInDialog();
+                  } else {
+                    context.push<void>('/notes/create');
+                  }
+                },
+                child: const Icon(Icons.add),
+              )
+            : null,
+        bottomNavigationBar: MediaQuery.removeViewPadding(
+          context: context,
+          removeTop: true,
+          child: NavigationBar(
+            selectedIndex: currentIndex,
+            onDestinationSelected: _toggleCurrentIndex,
+            destinations: _destinationItems,
+          ),
+        ),
       ),
     );
   }
