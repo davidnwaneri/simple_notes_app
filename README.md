@@ -97,6 +97,7 @@ Appwrite. Once that is done, proceed with the following steps:
     - (String) [Attribute Key]: `body` || [Size]: 2000 || [Required]: true
     - (String) [Attribute Key]: `id` || [Size]: 40 || [Required]: true
     - (String) [Attribute Key]: `ownedId` || [Size]: 40 || [Required]: true
+10. Do not forget to enable `CREATE`, `READ`, `UPDATE` and `DELETE` permissions for the created collections by navigating to the settings section of the collection.
 
 For more information on how to use Appwrite, check out the [Appwrite documentation](https://appwrite.io/docs).
 
