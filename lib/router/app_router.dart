@@ -7,7 +7,7 @@ import 'package:go_router/go_router.dart';
 
 // 🌎 Project imports:
 import 'package:simple_notes_app/models/models.dart';
-import 'package:simple_notes_app/repository/repository.dart';
+import 'package:simple_notes_app/repository/notes_repository.dart';
 import 'package:simple_notes_app/view/notes/notes_screen/bloc/fetch_notes_bloc.dart';
 import 'package:simple_notes_app/view/view.dart';
 
@@ -22,6 +22,21 @@ class AppRouter {
     routes: [
       ShellRoute(
         navigatorKey: _shellNavigatorKey,
+        builder: (context, state, child) {
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider<CurrentIndexCubit>(
+                create: (_) => CurrentIndexCubit(),
+              ),
+              BlocProvider<FetchNotesBloc>(
+                create: (context) => FetchNotesBloc(
+                  repository: context.read<NotesRepository>(),
+                ),
+              ),
+            ],
+            child: BottomNavigationScaffold(child: child),
+          );
+        },
         routes: [
           GoRoute(
             parentNavigatorKey: _shellNavigatorKey,
@@ -81,21 +96,6 @@ class AppRouter {
             ],
           ),
         ],
-        builder: (context, state, child) {
-          return MultiBlocProvider(
-            providers: [
-              BlocProvider<CurrentIndexCubit>(
-                create: (_) => CurrentIndexCubit(),
-              ),
-              BlocProvider<FetchNotesBloc>(
-                create: (context) => FetchNotesBloc(
-                  repository: context.read<FetchNotesRepositoryImpl>(),
-                ),
-              ),
-            ],
-            child: BottomNavigationScaffold(child: child),
-          );
-        },
       ),
       GoRoute(
         parentNavigatorKey: _rootNavigatorKey,

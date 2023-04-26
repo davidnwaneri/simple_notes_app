@@ -2,7 +2,22 @@
 import 'dart:collection';
 
 // 🌎 Project imports:
+import 'package:fpdart/fpdart.dart';
+import 'package:simple_notes_app/core/failure.dart';
+import 'package:simple_notes_app/core/typedefs.dart';
 import 'package:simple_notes_app/models/models.dart';
+
+class DummyNoteService {
+  FutureEitherNotes fetchNotes({required String ownerId}) async {
+    try {
+      await Future<void>.delayed(const Duration(seconds: 2));
+      return right(dummyNotes);
+    } catch (e, st) {
+      return left(
+          FetchingNotesFailure('Failed to fetch notes', stackTrace: st));
+    }
+  }
+}
 
 UnmodifiableListView<Note> get dummyNotes {
   return UnmodifiableListView(_dummyNotes);

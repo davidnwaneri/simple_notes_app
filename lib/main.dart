@@ -1,11 +1,12 @@
 // 🎯 Dart imports:
 import 'dart:collection';
 
-// 🐦 Flutter imports:
-import 'package:flutter/material.dart';
-
 // 📦 Package imports:
 import 'package:appwrite/appwrite.dart';
+
+// 🐦 Flutter imports:
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
@@ -13,7 +14,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // 🌎 Project imports:
 import 'package:simple_notes_app/local_storage_service/local_storage_service.dart';
+import 'package:simple_notes_app/remote_service/remote_appwrite_service.dart';
 import 'package:simple_notes_app/remote_service/remote_service.dart';
+import 'package:simple_notes_app/repository/notes_repository.dart';
 import 'package:simple_notes_app/repository/repository.dart';
 import 'package:simple_notes_app/router/app_router.dart';
 import 'package:simple_notes_app/theme/app_theme.dart';
@@ -96,48 +99,16 @@ Future<void> main() async {
             remoteService: context.read<SignInRemoteServiceWithAppWrite>(),
           ),
         ),
-        RepositoryProvider<CreateNoteRemoteServiceWithAppWrite>(
-          create: (context) => CreateNoteRemoteServiceWithAppWrite(
+        RepositoryProvider<RemoteAppWriteService>(
+          create: (context) => RemoteAppWriteService(
             databases: context.read<Databases>(),
           ),
         ),
-        RepositoryProvider<CreateNoteRepositoryImpl>(
-          create: (context) => CreateNoteRepositoryImpl(
-            remoteService: context.read<CreateNoteRemoteServiceWithAppWrite>(),
+        RepositoryProvider<NotesRepository>(
+          create: (context) => NotesRepository(
+            remoteService: context.read<RemoteAppWriteService>(),
             userAccountLocalStorageService:
                 context.read<UserAccountLocalStorageService>(),
-          ),
-        ),
-        RepositoryProvider<FetchNotesRemoteServiceWithAppWrite>(
-          create: (context) => FetchNotesRemoteServiceWithAppWrite(
-            databases: context.read<Databases>(),
-          ),
-        ),
-        RepositoryProvider<FetchNotesRepositoryImpl>(
-          create: (context) => FetchNotesRepositoryImpl(
-            remoteService: context.read<FetchNotesRemoteServiceWithAppWrite>(),
-            userAccountLocalStorageService:
-                context.read<UserAccountLocalStorageService>(),
-          ),
-        ),
-        RepositoryProvider<EditNoteRemoteServiceWithAppWrite>(
-          create: (context) => EditNoteRemoteServiceWithAppWrite(
-            databases: context.read<Databases>(),
-          ),
-        ),
-        RepositoryProvider<EditNoteRepositoryImpl>(
-          create: (context) => EditNoteRepositoryImpl(
-            remoteService: context.read<EditNoteRemoteServiceWithAppWrite>(),
-          ),
-        ),
-        RepositoryProvider<DeleteNoteRemoteServiceWithAppWrite>(
-          create: (context) => DeleteNoteRemoteServiceWithAppWrite(
-            databases: context.read<Databases>(),
-          ),
-        ),
-        RepositoryProvider<DeleteNoteRepositoryImpl>(
-          create: (context) => DeleteNoteRepositoryImpl(
-            remoteService: context.read<DeleteNoteRemoteServiceWithAppWrite>(),
           ),
         ),
       ],
@@ -168,20 +139,20 @@ Future<void> main() async {
           ),
           BlocProvider<CreateNoteBloc>(
             create: (context) => CreateNoteBloc(
-              repository: context.read<CreateNoteRepositoryImpl>(),
+              repository: context.read<NotesRepository>(),
             ),
           ),
           BlocProvider<EditNoteBloc>(
             create: (context) {
               return EditNoteBloc(
-                repository: context.read<EditNoteRepositoryImpl>(),
+                repository: context.read<NotesRepository>(),
               );
             },
           ),
           BlocProvider<DeleteNoteBloc>(
             create: (context) {
               return DeleteNoteBloc(
-                repository: context.read<DeleteNoteRepositoryImpl>(),
+                repository: context.read<NotesRepository>(),
               );
             },
           ),
@@ -200,14 +171,16 @@ class SimpleNotesApp extends StatefulWidget {
 }
 
 class _SimpleNotesAppState extends State<SimpleNotesApp> {
-  late final IAppTheme _appTheme;
+  late final AppThemeWithFlexColorScheme _appTheme;
   late final AppRouter _appRouter;
 
   @override
   void initState() {
     super.initState();
-    _appTheme = IAppTheme.withFlexColorScheme();
+    _appTheme = const AppThemeWithFlexColorScheme();
     _appRouter = AppRouter();
+
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
 
     _getCurrentUser();
   }
@@ -222,7 +195,7 @@ class _SimpleNotesAppState extends State<SimpleNotesApp> {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'SimpleNotes',
-      scrollBehavior: const AppScrollBehavior(),
+      scrollBehavior: const _AppScrollBehavior(),
       theme: _appTheme.lightTheme,
       darkTheme: _appTheme.darkTheme,
       themeMode: selectedTheme.mode,
@@ -231,8 +204,8 @@ class _SimpleNotesAppState extends State<SimpleNotesApp> {
   }
 }
 
-class AppScrollBehavior extends ScrollBehavior {
-  const AppScrollBehavior();
+class _AppScrollBehavior extends ScrollBehavior {
+  const _AppScrollBehavior();
 
   @override
   ScrollPhysics getScrollPhysics(BuildContext context) {
