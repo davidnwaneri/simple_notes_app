@@ -109,10 +109,3 @@ appropriate values.
 This project is licensed under the [GNU GPLv3](https://choosealicense.com/licenses/gpl-3.0/) License - see the LICENSE file for details.
 
 The GNU GPLv3 is a free and open-source software license that gives users the freedom to use, modify, and distribute the software as they see fit, as long as they also distribute the modified software under the same license. If you choose to use this project or any of its code, please make sure to read and understand the terms of the license.
-
-## Conclusion
-
-SimpleNotes is a simple and elegant note-taking app that provides a secure and reliable way to store notes. The app is
-built with Flutter and integrates with Appwrite for data synchronization and authentication. The dependencies used in
-the development of this project provide a robust and efficient foundation for building Flutter apps.
-
