@@ -4,7 +4,11 @@ SimpleNotes is a Flutter project that provides a simple note-taking application 
 synchronization features using [Appwrite](https://appwrite.io/). The app is designed to allow users to create and store
 notes in a secure and organized manner.
 
-<video width="100%" src="https://user-images.githubusercontent.com/48889672/233867067-461fbf77-f07f-4cfe-b1ba-50fdde3b64fb.mp4" alt="Simple Note App"></video>
+https://github.com/davidnwaneri/simple_notes_app/assets/48889672/3bb37c7d-1f9e-4c5e-a659-7411cc62d1cf
+
+
+
+
 
 ## Dependencies
 
