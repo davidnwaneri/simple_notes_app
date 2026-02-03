@@ -27,7 +27,7 @@ class SignInRemoteServiceWithAppWrite implements ISignInRemoteService {
     required String password,
   }) async {
     try {
-      final session = await _account.createEmailSession(
+      final session = await _account.createEmailPasswordSession(
         email: email,
         password: password,
       );
