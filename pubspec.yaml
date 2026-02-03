@@ -4,7 +4,7 @@ description: Simple notes app with Appwrite
 version: 0.1.0
 
 environment:
-  sdk: ">=2.19.6 <3.0.0"
+  sdk: ^3.10.0
 
 dependencies:
   appwrite: ^9.0.0
