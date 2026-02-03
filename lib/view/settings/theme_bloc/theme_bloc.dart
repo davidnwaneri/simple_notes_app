@@ -1,10 +1,9 @@
 // 🐦 Flutter imports:
 
-// 🐦 Flutter imports:
-import 'package:flutter/material.dart';
-
 // 📦 Package imports:
 import 'package:equatable/equatable.dart';
+// 🐦 Flutter imports:
+import 'package:flutter/material.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 // EVENT
@@ -26,7 +25,7 @@ class ThemeChanged extends ThemeEvent {
 
 // BLOC
 class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeValue> {
-  ThemeBloc() : super(ThemeValue.system) {
+  ThemeBloc() : super(ThemeValue.dark) {
     on<ThemeChanged>(_onThemeChanged);
   }
 
