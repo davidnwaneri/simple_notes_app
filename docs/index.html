@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SimpleNotes - A beautiful and secure note-taking app">
+    <title>SimpleNotes - Simple, Secure Note-Taking</title>
+    <link rel="icon" type="image/png" href="favicon.png"/>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 20px;
+            color: white;
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        header p {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .content {
+            background: white;
+            border-radius: 20px;
+            padding: 60px 40px;
+            margin: 40px auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .feature-card {
+            padding: 30px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #667eea;
+        }
+
+        .feature-card p {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .section {
+            margin: 60px 0;
+        }
+
+        .section h2 {
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            color: #333;
+            text-align: center;
+        }
+
+        .delete-account {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            padding: 40px;
+            border-radius: 15px;
+            margin: 40px 0;
+            border-left: 5px solid #e17055;
+        }
+
+        .delete-account h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #d63031;
+        }
+
+        .delete-account p {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: #2d3436;
+            line-height: 1.8;
+        }
+
+        .delete-account ol {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        .delete-account ol li {
+            margin-bottom: 10px;
+            color: #2d3436;
+        }
+
+        .important-note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .important-note strong {
+            color: #856404;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: white;
+            opacity: 0.9;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: underline;
+            margin: 0 10px;
+        }
+
+        footer a:hover {
+            opacity: 0.8;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.5rem;
+            }
+
+            header p {
+                font-size: 1.1rem;
+            }
+
+            .content {
+                padding: 40px 20px;
+            }
+
+            .section h2 {
+                font-size: 1.8rem;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📝 SimpleNotes</h1>
+            <p>A beautiful, simple, and secure note-taking app built with Flutter and Appwrite</p>
+        </header>
+
+        <div class="content">
+            <section class="section">
+                <h2>Why SimpleNotes?</h2>
+                <div class="features">
+                    <div class="feature-card">
+                        <h3>🔒 Secure & Private</h3>
+                        <p>Your notes are secured with authentication and stored safely using Appwrite backend services.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>☁️ Cloud Sync</h3>
+                        <p>Access your notes from anywhere. All your notes are synchronized across your devices.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>✨ Simple & Clean</h3>
+                        <p>No clutter, no distractions. Just a clean interface to focus on what matters - your notes.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>📱 Cross-Platform</h3>
+                        <p>Built with Flutter, SimpleNotes works seamlessly on Android, iOS, Web, and Desktop.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>🚀 Fast & Lightweight</h3>
+                        <p>Optimized performance ensures your notes are always ready when you need them.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>🎨 Beautiful Design</h3>
+                        <p>Enjoy a modern, aesthetically pleasing interface with customizable themes.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>Features</h2>
+                <ul style="max-width: 600px; margin: 0 auto; font-size: 1.1rem; line-height: 2;">
+                    <li>✅ Create, edit, and delete notes</li>
+                    <li>✅ User authentication and account management</li>
+                    <li>✅ Real-time synchronization</li>
+                    <li>✅ Responsive design for all screen sizes</li>
+                    <li>✅ Open-source and free to use</li>
+                </ul>
+            </section>
+
+            <section class="section delete-account">
+                <h3>🗑️ Account Deletion</h3>
+                <p>If you wish to delete your account and all associated data, you can do so directly from within the SimpleNotes app.</p>
+                
+                <div class="important-note">
+                    <p><strong>Important:</strong> Account deletion is permanent and cannot be undone. All your notes and data will be permanently removed.</p>
+                </div>
+
+                <p><strong>To delete your account:</strong></p>
+                <ol>
+                    <li>Open the SimpleNotes app on your device</li>
+                    <li>Navigate to your <strong>Profile</strong> or <strong>Settings</strong> section</li>
+                    <li>Look for the <strong>"Account Settings"</strong> or <strong>"Delete Account"</strong> option</li>
+                    <li>Follow the on-screen instructions to confirm account deletion</li>
+                    <li>Your account and all associated data will be permanently deleted</li>
+                </ol>
+
+                <p>If you encounter any issues with account deletion or have questions, please contact the app developer through the repository issues page.</p>
+            </section>
+
+            <section class="section">
+                <h2>Get Started</h2>
+                <p style="text-align: center; font-size: 1.1rem; margin-bottom: 20px;">
+                    SimpleNotes is an open-source project. You can download the source code, contribute, or report issues on GitHub.
+                </p>
+                <div style="text-align: center;">
+                    <a href="https://github.com/davidnwaneri/simple_notes_app" class="btn" target="_blank">View on GitHub</a>
+                </div>
+            </section>
+        </div>
+
+        <footer>
+            <p>&copy; 2024-2026 SimpleNotes. Licensed under <a href="https://github.com/davidnwaneri/simple_notes_app/blob/main/LICENSE" target="_blank">GNU GPLv3</a></p>
+            <p>
+                <a href="https://github.com/davidnwaneri/simple_notes_app" target="_blank">GitHub</a> |
+                <a href="https://github.com/davidnwaneri/simple_notes_app/issues" target="_blank">Report an Issue</a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
